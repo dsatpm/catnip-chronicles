@@ -65,6 +65,15 @@ Catnip Chronicles follows a well-organized project structure to enhance maintain
   **middleware:** Custom middleware functions
 
 
+  ## Collaborators
+
+### [jcwarwick](https://github.com/jcwarwick)
+### [kpfenning](https://github.com/kpfenning)
+### [TorySnopl](https://github.com/TorySnopl)
+### [UCarr81](https://github.com/UCarr81)
+### [dsatpm](https://github.com/dsatpm)
+
+
   ## Contribution
 
   We welcome contributions to make Catnip Chronicles even more purrfect! Check out these [contribution guidelines](https://www.contributor-covenant.org/) to get started.
