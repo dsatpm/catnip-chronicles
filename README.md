@@ -55,19 +55,19 @@ cd ../server && npm start
 
 Catnip Chronicles follows a well-organized project structure to enhance maintainability and scalability. Key directories include:
 ``` markdown
-  ├── **client:** Frontend React application
-│   ├── **public:** Static assets and HTML files
-│   ├── **src:** React components, styles, and assets
-  ├── **server:** Backend Node.js and Express server
-│   ├── **config:** Configuration files
-│   ├── **controllers:** Logic for handling HTTP requests
-    ├── **models:** Database models
-│   ├── **routes:** API route definitions
-│   ├── **middleware:** Custom middleware functions
-├── **node_modules**
-├── **package.json**
-├── **package-lock.json**
-└── **.gitignore**
+  ├── client: Frontend React application
+│   ├── public: Static assets and HTML files
+│   ├── src: React components, styles, and assets
+  ├── server: Backend Node.js and Express server
+│   ├── config: Configuration files
+│   ├── controllers: Logic for handling HTTP requests
+    ├── models: Database models
+│   ├── routes: API route definitions
+│   ├── middleware: Custom middleware functions
+├── node_modules
+├── package.json
+├── package-lock.json
+└── .gitignore
 ```
 
 
