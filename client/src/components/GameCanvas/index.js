@@ -3,8 +3,8 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
 // Set canvas size to match window size
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 1024;
+canvas.height = 576;
 
 // Gravity constant
 const gravity = 2;
@@ -45,6 +45,9 @@ class Player {
     }
 }
 
+const terrainImage = new Image();
+terrainImage.src = '/client/src/Images/Terrain/Grass Terrain(16x64).jpg'
+
 // Platform class
 class Platform {
     constructor({ x, y }) {
@@ -53,14 +56,14 @@ class Platform {
             x,
             y
         };
-        this.height = 20;
-        this.width = 200;
+        this.height = 40;
+        this.width = 400;
+        this.image = terrainImage
     }
 
     // Draw the platform on the canvas
     draw() {
-        c.fillStyle = 'black';
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
+        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
 }
 
@@ -68,16 +71,16 @@ class Platform {
 const player = new Player();
 const platforms = [
     new Platform({
-        x: 200,
-        y: 100
+        x: 0,
+        y: 536
     }),
     new Platform({
         x: 400,
-        y: 200
+        y: 536
     }),
     new Platform({
-        x: 600,
-        y: 300
+        x: 800,
+        y: 536
     })
 ]
 
@@ -97,7 +100,8 @@ let scrollOffset = 0
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = 'white';
+    c.fillRect(0, 0, canvas.width, canvas.height);
 
     // Update and draw player
     player.update();
