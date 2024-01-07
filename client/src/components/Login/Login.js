@@ -8,6 +8,7 @@ const Login = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		console.log(username, password);
 		try {
 			const res = await axios.post('http://localhost:5000/auth/login', {
 				username,
@@ -21,13 +22,14 @@ const Login = () => {
 	return (
 		<>
 			<section className='login'>
-				<form>
-					<h2>Login</h2>
+				<form onSubmit={handleSubmit}>
+					<h2>Catnip Chronicles</h2>
 					<input
 						type='username'
 						placeholder='Username'
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
+						autoComplete='off'
 						required
 					/>
 					<input
@@ -35,13 +37,13 @@ const Login = () => {
 						placeholder='Password'
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
+						autoComplete='off'
 						required
 					/>
-					<button
-						type='submit'
-						onClick={handleSubmit}>
-						Login
+					<button type='submit'>
+						<span>Login</span>
 					</button>
+				<p>Don't have an account? <a href='/signup'>Signup</a></p>
 				</form>
 			</section>
 		</>
