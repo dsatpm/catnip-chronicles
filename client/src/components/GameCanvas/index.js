@@ -11,9 +11,10 @@ canvas.height = 576;
 // Gravity constant
 const gravity = 2;
 
-// Player class
 class Player {
     constructor() {
+
+=======
         this.speed = 5;
         // Initial position, velocity, and dimensions
         this.position = {
@@ -26,23 +27,49 @@ class Player {
         };
         this.width = 40;
         this.height = 40;
+        this.jumpsRemaining = 2;
+        this.jumpPower = 20;
+        this.isOnGround = false;
     }
 
-    // Draw the player on the canvas
     draw() {
         c.fillStyle = 'blue';
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
-    // Update player position and apply gravity
     update() {
         this.draw();
         this.position.y += this.velocity.y;
         this.position.x += this.velocity.x;
 
         // Apply gravity if the player is above the ground
-        if (this.position.y + this.height + this.velocity.y <= canvas.height)
+        if (this.position.y + this.height < canvas.height) {
             this.velocity.y += gravity;
+
+            this.isOnGround = false;
+        } else {
+            this.velocity.y = 0;
+            this.position.y = canvas.height - this.height;
+            this.isOnGround = true;
+            this.jumpsRemaining = 2; // Reset jumps when landing on the ground
+        }
+
+        // Limit jumping when the player is on the ground or has remaining jumps
+        if ((this.isOnGround || this.position.y + this.height >= canvas.height) && this.jumpsRemaining > 0) {
+            // Simulate jumping on pressing the 'Space' key (change as needed)
+            window.addEventListener('keydown', (event) => {
+                if (event.code === 'Space') {
+                    const jumpHeight = this.position.y - this.jumpPower;
+                    this.position.y = jumpHeight < 0 ? 0 : jumpHeight; // Limit jump height to canvas top
+                    this.velocity.y = -this.jumpPower;
+                    this.jumpsRemaining--;
+                }
+            });
+        }
+    }
+}
+
+
     }
 }
 
