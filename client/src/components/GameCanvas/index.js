@@ -1,4 +1,4 @@
-import { Platform, platforms } from './platforms';
+
 
 // Get canvas and 2D rendering context
 const canvas = document.querySelector('canvas');
