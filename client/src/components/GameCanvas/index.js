@@ -243,3 +243,7 @@ window.addEventListener('keyup', ({ keyCode }) => {
 });
 
 // Hello
+
+//Working? 
+const World = "Hello"
+console.log(World);
