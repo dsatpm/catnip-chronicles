@@ -1,3 +1,5 @@
+import { Platform, platforms } from './platforms';
+
 // Get canvas and 2D rendering context
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
@@ -12,6 +14,7 @@ const gravity = 2;
 // Player class
 class Player {
     constructor() {
+        this.speed = 5;
         // Initial position, velocity, and dimensions
         this.position = {
             x: 100,
@@ -40,8 +43,6 @@ class Player {
         // Apply gravity if the player is above the ground
         if (this.position.y + this.height + this.velocity.y <= canvas.height)
             this.velocity.y += gravity;
-        else
-            this.velocity.y = 0; // Stop falling when reaching the ground
     }
 }
 
@@ -67,9 +68,8 @@ class Platform {
     }
 }
 
-// Create player and platform instances
-const player = new Player();
-const platforms = [
+let player = new Player();
+let platforms = [
     new Platform({
         x: 0,
         y: 536
@@ -97,6 +97,26 @@ const keys = {
 
 let scrollOffset = 0
 
+function init() {
+// Create player and platform instances
+ player = new Player();
+ platforms = [
+    new Platform({
+        x: 0,
+        y: 536
+    }),
+    new Platform({
+        x: 400,
+        y: 536
+    }),
+    new Platform({
+        x: 800,
+        y: 536
+    })
+]
+ scrollOffset = 0
+}
+
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
@@ -113,23 +133,23 @@ function animate() {
 
     // Handle horizontal movement based on keyboard input
     if (keys.right.pressed && player.position.x < 400) {
-        player.velocity.x = 5;
+        player.velocity.x = player.speed;
     } else if (keys.left.pressed && player.position.x > 100) {
-        player.velocity.x = -5;
+        player.velocity.x = -player.speed;
     } else {
         player.velocity.x = 0;
 
         // Move platforms horizontally based on keyboard input
         if (keys.right.pressed) {
-            scrollOffset += 5
+            scrollOffset += player.speed
             platforms.forEach(platform => {
-                platform.position.x -= 5
+                platform.position.x -= player.speed
             })
 
         } else if (keys.left.pressed) {
-            scrollOffset -= 5
+            scrollOffset -= player.speed
             platforms.forEach(platform => {
-                platform.position.x += 5
+                platform.position.x += player.speed
             })
         }
     }
@@ -145,8 +165,14 @@ console.log(scrollOffset)
             player.velocity.y = 0;
         }
     })
+    //win Condition
     if (scrollOffset > 3000) {
         console.log('You Win')
+    }
+
+    if (player.position.y > canvas.height) {
+        init()
+        console.log('GG, You kinda suck!');
     }
 }
 
