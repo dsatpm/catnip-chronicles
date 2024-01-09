@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './signup.scss';
 
 const Signup = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -16,6 +17,7 @@ const Signup = () => {
 				password,
 			});
 			console.log(res);
+			navigate('/login');
 		} catch (err) {
 			console.log(err);
 		}
@@ -30,6 +32,7 @@ const Signup = () => {
 						placeholder='Create Username'
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
+						autoComplete='off'
 						required
 					/>
 					<input
@@ -37,6 +40,7 @@ const Signup = () => {
 						placeholder='Create Password'
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
+						autoComplete='off'
 						required
 					/>
 					<button type='submit'>
