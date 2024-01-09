@@ -1,9 +1,14 @@
 import './App.css';
-import Homepage from './components/Homepage/Homepage';
+import { Outlet } from'react-router-dom';
+
 
 function App() {
 	return (
-		<Homepage />
+		<>
+		<div className='app'>
+			<Outlet />
+		</div>
+		</>
 	);
 }
 

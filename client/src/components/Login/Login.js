@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from'react-router-dom';
 import axios from 'axios';
 import './login.scss';
 
@@ -44,7 +45,7 @@ const Login = () => {
 						<span>Login</span>
 					</button>
 					<p>
-						Don't have an account? <a href='/signup'>Signup</a>
+						Don't have an account? <Link to='/signup'>Signup</Link>
 					</p>
 				</form>
 			</section>
