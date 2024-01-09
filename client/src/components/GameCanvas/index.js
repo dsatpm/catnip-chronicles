@@ -1,10 +1,12 @@
+
+
 // Get canvas and 2D rendering context
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
 // Set canvas size to match window size
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 1024;
+canvas.height = 576;
 
 // Gravity constant
 const gravity = 2;
@@ -12,6 +14,7 @@ const gravity = 2;
 // Player class
 class Player {
     constructor() {
+        this.speed = 5;
         // Initial position, velocity, and dimensions
         this.position = {
             x: 100,
@@ -40,10 +43,11 @@ class Player {
         // Apply gravity if the player is above the ground
         if (this.position.y + this.height + this.velocity.y <= canvas.height)
             this.velocity.y += gravity;
-        else
-            this.velocity.y = 0; // Stop falling when reaching the ground
     }
 }
+
+const terrainImage = new Image();
+terrainImage.src = '/client/src/Images/Terrain/Grass Terrain(16x64).jpg'
 
 // Platform class
 class Platform {
@@ -53,31 +57,30 @@ class Platform {
             x,
             y
         };
-        this.height = 20;
-        this.width = 200;
+        this.height = 40;
+        this.width = 400;
+        this.image = terrainImage
     }
 
     // Draw the platform on the canvas
     draw() {
-        c.fillStyle = 'black';
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
+        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
 }
 
-// Create player and platform instances
-const player = new Player();
-const platforms = [
+let player = new Player();
+let platforms = [
     new Platform({
-        x: 200,
-        y: 100
+        x: 0,
+        y: 536
     }),
     new Platform({
         x: 400,
-        y: 200
+        y: 536
     }),
     new Platform({
-        x: 600,
-        y: 300
+        x: 800,
+        y: 536
     })
 ]
 
@@ -94,10 +97,31 @@ const keys = {
 
 let scrollOffset = 0
 
+function init() {
+// Create player and platform instances
+ player = new Player();
+ platforms = [
+    new Platform({
+        x: 0,
+        y: 536
+    }),
+    new Platform({
+        x: 400,
+        y: 536
+    }),
+    new Platform({
+        x: 800,
+        y: 536
+    })
+]
+ scrollOffset = 0
+}
+
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = 'white';
+    c.fillRect(0, 0, canvas.width, canvas.height);
 
     // Update and draw player
     player.update();
@@ -109,23 +133,23 @@ function animate() {
 
     // Handle horizontal movement based on keyboard input
     if (keys.right.pressed && player.position.x < 400) {
-        player.velocity.x = 5;
+        player.velocity.x = player.speed;
     } else if (keys.left.pressed && player.position.x > 100) {
-        player.velocity.x = -5;
+        player.velocity.x = -player.speed;
     } else {
         player.velocity.x = 0;
 
         // Move platforms horizontally based on keyboard input
         if (keys.right.pressed) {
-            scrollOffset += 5
+            scrollOffset += player.speed
             platforms.forEach(platform => {
-                platform.position.x -= 5
+                platform.position.x -= player.speed
             })
 
         } else if (keys.left.pressed) {
-            scrollOffset -= 5
+            scrollOffset -= player.speed
             platforms.forEach(platform => {
-                platform.position.x += 5
+                platform.position.x += player.speed
             })
         }
     }
@@ -141,8 +165,14 @@ console.log(scrollOffset)
             player.velocity.y = 0;
         }
     })
+    //win Condition
     if (scrollOffset > 3000) {
         console.log('You Win')
+    }
+
+    if (player.position.y > canvas.height) {
+        init()
+        console.log('GG, You kinda suck!');
     }
 }
 
