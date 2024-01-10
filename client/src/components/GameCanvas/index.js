@@ -81,8 +81,8 @@ class Platform {
             x,
             y
         };
-        this.height = 40;
-        this.width = 400;
+        this.height = 60;
+        this.width = 50;
         this.image = terrainImage;
     }
 
@@ -95,8 +95,8 @@ class Platform {
 let player = new Player();
 let platforms = [
     new Platform({
-        x: 0,
-        y: 536
+        x: 200,
+        y: 460
     }),
     new Platform({
         x: 400,
@@ -167,7 +167,6 @@ function animate() {
         platform.draw()
     })
 
-
     // Handle horizontal movement based on keyboard input
     if (keys.right.pressed && player.position.x < 400) {
         player.velocity.x = player.speed;
@@ -204,7 +203,7 @@ function animate() {
         console.log('You Win');
     }
 
-    if (player.position.y > canvas.height) {
+    if (player.position.y + player.height > canvas.height) {
         init();
         console.log('GG, You kinda suck!');
     }
