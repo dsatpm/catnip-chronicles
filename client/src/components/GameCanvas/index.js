@@ -24,9 +24,10 @@ class Player {
         };
         this.width = 100;
         this.height = 200;
+        this.canJump = true; // Flag to control jump
 
         this.image = new Image();
-        this.image.src = '/client/src/assets/Meow-Knight_Run.png';
+        this.image.src = '/catnip-chronicles/client/src/assets/Meow-Knight_Run.png';
 
         this.frames = 8;
         this.frameIndex = 0;
@@ -34,22 +35,21 @@ class Player {
 
     // Draw the player on the canvas
     draw() {
-
         this.frameIndex = (this.frameIndex + 1) % this.frames;
-        const frameHeight = 28   
+        const frameHeight = 28;
         const sourceX = 0;
         const sourceY = this.frameIndex * 230;
         c.drawImage(
-            this.image, 
-            sourceX, 
-            sourceY, 
-            16, 
+            this.image,
+            sourceX,
+            sourceY,
+            16,
             frameHeight,
-            this.position.x, 
-            this.position.y, 
-            this.width, 
+            this.position.x,
+            this.position.y,
+            this.width,
             this.height
-            );
+        );
     }
 
     // Update player position and apply gravity
@@ -58,14 +58,19 @@ class Player {
         this.position.y += this.velocity.y;
         this.position.x += this.velocity.x;
 
-        // Apply gravity if the player is above the ground
-        if (this.position.y + this.height + this.velocity.y <= canvas.height)
+        // Apply gravity only if the player is above the ground
+        if (this.position.y + this.height < canvas.height) {
             this.velocity.y += gravity;
+            this.canJump = false; // Player is in the air, so can't jump
+        } else {
+            this.velocity.y = 0; // Stop vertical movement when on the ground
+            this.canJump = true; // Player is on the ground, allow jumping
+        }
     }
 }
 
 const terrainImage = new Image();
-terrainImage.src = '/client/src/Images/Terrain/Grass Terrain(16x64).jpg'
+terrainImage.src = '/catnip-chronicles/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
 
 // Platform class
 class Platform {
@@ -77,7 +82,7 @@ class Platform {
         };
         this.height = 40;
         this.width = 400;
-        this.image = terrainImage
+        this.image = terrainImage;
     }
 
     // Draw the platform on the canvas
@@ -100,7 +105,7 @@ let platforms = [
         x: 800,
         y: 536
     })
-]
+];
 
 // Keyboard input state
 const keys = {
@@ -110,29 +115,38 @@ const keys = {
     left: {
         pressed: false,
     }
-}
+};
 
-
-let scrollOffset = 0
+let scrollOffset = 0;
 
 function init() {
-// Create player and platform instances
- player = new Player();
- platforms = [
-    new Platform({
-        x: 0,
-        y: 536
-    }),
-    new Platform({
-        x: 400,
-        y: 536
-    }),
-    new Platform({
-        x: 800,
-        y: 536
-    })
-]
- scrollOffset = 0
+    // Create player and platform instances
+    player = new Player();
+    platforms = [
+        new Platform({
+            x: 0,
+            y: 536
+        }),
+        new Platform({
+            x: 400,
+            y: 536
+        }),
+        new Platform({
+            x: 800,
+            y: 536
+        })
+    ];
+    scrollOffset = 0;
+}
+
+// Collision detection function between player and platforms
+function detectCollision(player, platform) {
+    return (
+        player.position.y + player.height <= platform.position.y &&
+        player.position.y + player.height + player.velocity.y >= platform.position.y &&
+        player.position.x + player.width >= platform.position.x &&
+        player.position.x <= platform.position.x + platform.width
+    );
 }
 
 // Animation loop
@@ -146,8 +160,8 @@ function animate() {
 
     // Draw platforms
     platforms.forEach(platform => {
-        platform.draw()
-    })
+        platform.draw();
+    });
 
     // Handle horizontal movement based on keyboard input
     if (keys.right.pressed && player.position.x < 400) {
@@ -159,42 +173,40 @@ function animate() {
 
         // Move platforms horizontally based on keyboard input
         if (keys.right.pressed) {
-            scrollOffset += player.speed
+            scrollOffset += player.speed;
             platforms.forEach(platform => {
-                platform.position.x -= player.speed
-            })
+                platform.position.x -= player.speed;
+            });
 
         } else if (keys.left.pressed) {
-            scrollOffset -= player.speed
+            scrollOffset -= player.speed;
             platforms.forEach(platform => {
-                platform.position.x += player.speed
-            })
+                platform.position.x += player.speed;
+            });
         }
     }
-console.log(scrollOffset)
+
     // Check for collision with the platform and stop vertical movement if colliding
     platforms.forEach((platform) => {
-        if (
-            player.position.y + player.height <= platform.position.y &&
-            player.position.y + player.height + player.velocity.y >= platform.position.y &&
-            player.position.x + player.width >= platform.position.x &&
-            player.position.x <= platform.position.x + platform.width
-        ) {
+        if (detectCollision(player, platform)) {
             player.velocity.y = 0;
+            player.canJump = true; // Reset jump when player is on a platform
         }
-    })
-    //win Condition
+    });
+
+    // win Condition
     if (scrollOffset > 3000) {
-        console.log('You Win')
+        console.log('You Win');
     }
 
     if (player.position.y > canvas.height) {
-        init()
+        init();
         console.log('GG, You kinda suck!');
     }
 }
 
 animate();
+
 
 // Event listeners for keyboard input
 window.addEventListener('keydown', ({ keyCode }) => {
@@ -203,8 +215,11 @@ window.addEventListener('keydown', ({ keyCode }) => {
             keys.left.pressed = true;
             break;
 
-        case 87: // Up arrow key
-            player.velocity.y -= 25; // Apply upward velocity for jumping
+        case 87: // W key for jumping
+            if (player.canJump) {
+                player.velocity.y = -25; // Apply upward velocity for jumping
+                player.canJump = false; // Update jump flag
+            }
             break;
 
         case 68: // Right arrow key
@@ -226,7 +241,7 @@ window.addEventListener('keyup', ({ keyCode }) => {
             keys.left.pressed = false;
             break;
 
-        case 87: // Up arrow key
+        case 87: // W key
             break;
 
         case 68: // Right arrow key
@@ -241,9 +256,3 @@ window.addEventListener('keyup', ({ keyCode }) => {
             break;
     }
 });
-
-// Hello
-
-//Working? 
-const World = "Hello"
-console.log(World);
