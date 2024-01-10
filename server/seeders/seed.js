@@ -9,7 +9,6 @@ db.once('open', async () => {
         
         await User.create(userSeeds);
 
-
     } catch (err) {
     console.error(err);
 }});
