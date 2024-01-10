@@ -21,10 +21,6 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(routes);
 
-app.get('/api', (req, res) => {
-	res.send('Hello to Catnip Chronicles from the API!');
-});
-
 // start server
 app.listen(PORT, async () => {
 	console.log(`Server is running on port: ${PORT}`);
