@@ -22,38 +22,34 @@ class Player {
             x: 0,
             y: 0
         };
-        this.width = 100;
-        this.height = 200;
+        this.width = 200;
+        this.height = 100;
 
         this.image = new Image();
-        this.image.src = '/client/src/assets/Meow-Knight_Run.png';
-
-        this.frames = 8;
+        this.image.src = '/client/src/assets/RunningSprite.png';
+        this.frames = 24;
         this.frameIndex = 0;
     }
 
     // Draw the player on the canvas
     draw() {
-
-        this.frameIndex = (this.frameIndex + 1) % this.frames;
-        const frameHeight = 28   
-        const sourceX = 0;
-        const sourceY = this.frameIndex * 230;
         c.drawImage(
-            this.image, 
-            sourceX, 
-            sourceY, 
-            16, 
-            frameHeight,
-            this.position.x, 
-            this.position.y, 
-            this.width, 
+            this.image,
+            20 * this.frames,
+            0,
+            20, 
+            20,
+            this.position.x,
+            this.position.y,
+            this.width,
             this.height
-            );
+        )
     }
 
     // Update player position and apply gravity
     update() {
+        this.frames++
+        if (this.frames > 24) this.frames = 0
         this.draw();
         this.position.y += this.velocity.y;
         this.position.x += this.velocity.x;
