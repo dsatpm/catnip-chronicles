@@ -23,8 +23,8 @@ class Player {
             y: 0
         };
 
-        this.width = 200;
-        this.height = 100;
+        this.width = 20;
+        this.height = 30;
 
         this.image = new Image();
         this.image.src = '/client/src/assets/RunningSprite.png';
@@ -42,7 +42,6 @@ class Player {
             0,
             20, 
             20,
-
             this.position.x,
             this.position.y,
             this.width,
@@ -72,7 +71,7 @@ class Player {
 }
 
 const terrainImage = new Image();
-terrainImage.src = '/catnip-chronicles/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
+terrainImage.src = '/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
 
 // Platform class
 class Platform {
@@ -82,8 +81,8 @@ class Platform {
             x,
             y
         };
-        this.height = 40;
-        this.width = 400;
+        this.height = 60;
+        this.width = 50;
         this.image = terrainImage;
     }
 
@@ -96,8 +95,8 @@ class Platform {
 let player = new Player();
 let platforms = [
     new Platform({
-        x: 0,
-        y: 536
+        x: 200,
+        y: 460
     }),
     new Platform({
         x: 400,
@@ -150,20 +149,23 @@ function detectCollision(player, platform) {
         player.position.x <= platform.position.x + platform.width
     );
 }
-
+const backgroundImage = new Image();
+backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0.png';
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    c.fillStyle = 'white';
-    c.fillRect(0, 0, canvas.width, canvas.height);
+
+    const backgroundX = -scrollOffset % backgroundImage.width;
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.drawImage(backgroundImage, backgroundX, 0, canvas.width, canvas.height);
 
     // Update and draw player
     player.update();
 
     // Draw platforms
     platforms.forEach(platform => {
-        platform.draw();
-    });
+        platform.draw()
+    })
 
     // Handle horizontal movement based on keyboard input
     if (keys.right.pressed && player.position.x < 400) {
@@ -201,7 +203,7 @@ function animate() {
         console.log('You Win');
     }
 
-    if (player.position.y > canvas.height) {
+    if (player.position.y + player.height > canvas.height) {
         init();
         console.log('GG, You kinda suck!');
     }
