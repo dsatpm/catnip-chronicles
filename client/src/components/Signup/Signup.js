@@ -24,7 +24,7 @@ const Signup = () => {
 	};
 	return (
 		<>
-			<section className='signup'>
+			<section id='signup' className='signup'>
 				<form onSubmit={handleSubmit}>
 					<h2>Signup</h2>
 					<input

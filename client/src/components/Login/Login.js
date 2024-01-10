@@ -22,7 +22,7 @@ const Login = () => {
 	};
 	return (
 		<>
-			<section className='login'>
+			<section id='login' className='login'>
 				<form onSubmit={handleSubmit}>
 					<h2>Catnip Chronicles</h2>
 					<input
