@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import './index.css';
 import App from './App';
 import Homepage from './components/Homepage/Homepage';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
+import WrongPage from './components/NotFound/NotFound';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <App />,
-		errorElement: <h1>Wrong page!</h1>,
+		errorElement: <WrongPage />,
 		children: [
 			{
 				index: true,
