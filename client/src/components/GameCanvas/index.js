@@ -3,19 +3,33 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
 // Set canvas size to match window size
-canvas.width = 1024;
-canvas.height = 576;
+canvas.width = 3840;   //1024
+canvas.height = 640;   //576
 
 // Gravity constant
-const gravity = 2;
+const gravity = 1;
 
+const idleImage = new Image();
+idleImage.src = '/client/src/assets/Sprites/Idle.png'
+
+const reversedIdleImage = new Image();
+reversedIdleImage.src = '/client/src/assets/Sprites/Idle(reversed).png'
+
+const runImage = new Image();
+runImage.src = '/client/src/assets/Sprites/RunningSprite.png'
+
+const reverseRunImage = new Image();
+reverseRunImage.src = '/client/src/assets/Sprites/RunningSprite(reversed).png'
+
+
+function startGame() {
 // Player class
 class Player {
     constructor() {
-        this.speed = 5;
+        this.speed = 2;
         // Initial position, velocity, and dimensions
         this.position = {
-            x: 100,
+            x: 1500,
             y: 100
         };
         this.velocity = {
@@ -23,21 +37,30 @@ class Player {
             y: 0
         };
 
-        this.width = 20;
+        this.width = 30;
         this.height = 30;
 
-        this.image = new Image();
-        this.image.src = '/catnip-chronicles/client/src/assets/RunningSprite.png';
-        this.frames = 24;
-
-        this.frameIndex = 0;
+        this.image = idleImage
+        this.frames = 0;
+        this.sprites = {
+            stand: {
+             right: idleImage,
+             left: reversedIdleImage
+            },
+            run: {
+             right: runImage,
+             left: reverseRunImage
+            }
+        };
+        this.currentSprite = this.sprites.stand.right
     }
+
 
     // Draw the player on the canvas
     draw() {
 
         c.drawImage(
-            this.image,
+            this.currentSprite,
             20 * this.frames,
             0,
             20, 
@@ -54,7 +77,7 @@ class Player {
     // Update player position and apply gravity
     update() {
         this.frames++
-        if (this.frames > 24) this.frames = 0
+        if (this.frames > 16) this.frames = 0
         this.draw();
         this.position.y += this.velocity.y;
         this.position.x += this.velocity.x;
@@ -81,8 +104,8 @@ class Platform {
             x,
             y
         };
-        this.height = 60;
-        this.width = 50;
+        this.height = 20;
+        this.width = 100;
         this.image = terrainImage;
     }
 
@@ -95,19 +118,20 @@ class Platform {
 let player = new Player();
 let platforms = [
     new Platform({
-        x: 200,
-        y: 460
-    }),
-    new Platform({
-        x: 400,
+        x: 1500,
         y: 536
     }),
     new Platform({
-        x: 800,
+        x: -400,
+        y: 536
+    }),
+    new Platform({
+        x: -800,
         y: 536
     })
 ];
 
+let currentKey
 // Keyboard input state
 const keys = {
     right: {
@@ -150,12 +174,15 @@ function detectCollision(player, platform) {
     );
 }
 const backgroundImage = new Image();
-backgroundImage.src = '/catnip-chronicles/client/src/assets/catnipChroniclesLevel0.png';
+
+backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0(copy).jpg';
+
+let offsetX = 1400;
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
 
-    const backgroundX = -scrollOffset % backgroundImage.width;
+    const backgroundX = (-scrollOffset + offsetX) % backgroundImage.width;
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.drawImage(backgroundImage, backgroundX, 0, canvas.width, canvas.height);
 
@@ -168,9 +195,9 @@ function animate() {
     })
 
     // Handle horizontal movement based on keyboard input
-    if (keys.right.pressed && player.position.x < 400) {
+    if (keys.right.pressed && player.position.x < 1700) {
         player.velocity.x = player.speed;
-    } else if (keys.left.pressed && player.position.x > 100) {
+    } else if (keys.left.pressed && player.position.x > 1500) {
         player.velocity.x = -player.speed;
     } else {
         player.velocity.x = 0;
@@ -196,14 +223,29 @@ function animate() {
             player.velocity.y = 0;
             player.canJump = true; // Reset jump when player is on a platform
         }
-    });
+    })
+
+    if (
+        keys.right.pressed && currentKey === 'right' && player.currentSprite !== player.sprites.run.right
+    ) {
+        player.currentSprite = player.sprites.run.right
+    } else if (keys.left.pressed && currentKey === 'left' && player.currentSprite !== player.sprites.run.left
+    ) {
+        player.currentSprite = player.sprites.run.left
+    } else if (!keys.left.pressed && currentKey === 'left' && player.currentSprite !== player.sprites.run.left
+    ) {
+        player.currentSprite = player.sprites.stand.left
+    } else if (!keys.right.pressed && currentKey === 'right' && player.currentSprite !== player.sprites.run.left
+    ) {
+        player.currentSprite = player.sprites.stand.right
+    }
 
     // win Condition
     if (scrollOffset > 3000) {
         console.log('You Win');
     }
 
-    if (player.position.y + player.height > canvas.height) {
+    if (player.position.y > canvas.height) {
         init();
         console.log('GG, You kinda suck!');
     }
@@ -212,22 +254,26 @@ function animate() {
 animate();
 
 
+
+
 // Event listeners for keyboard input
 window.addEventListener('keydown', ({ keyCode }) => {
     switch (keyCode) {
         case 65: // Left arrow key
             keys.left.pressed = true;
+            currentKey = 'left'
             break;
 
         case 87: // W key for jumping
             if (player.canJump) {
-                player.velocity.y = -25; // Apply upward velocity for jumping
+                player.velocity.y = -12; // Apply upward velocity for jumping
                 player.canJump = false; // Update jump flag
             }
             break;
 
         case 68: // Right arrow key
-            keys.right.pressed = true;
+            keys.right.pressed = true
+            currentKey = 'right'
             break;
 
         case 82: // Down arrow key
@@ -243,6 +289,7 @@ window.addEventListener('keyup', ({ keyCode }) => {
     switch (keyCode) {
         case 65: // Left arrow key
             keys.left.pressed = false;
+            player.currentSprite = player.sprites.stand.left
             break;
 
         case 87: // W key
@@ -250,6 +297,7 @@ window.addEventListener('keyup', ({ keyCode }) => {
 
         case 68: // Right arrow key
             keys.right.pressed = false;
+            player.currentSprite = player.sprites.stand.right
             break;
 
         case 82: // Down arrow key
@@ -260,3 +308,9 @@ window.addEventListener('keyup', ({ keyCode }) => {
             break;
     }
 });
+
+
+}
+
+const startButton = document.getElementById('startButton');
+startButton.addEventListener('click', startGame);
