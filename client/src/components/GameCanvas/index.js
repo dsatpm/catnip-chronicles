@@ -3,8 +3,8 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
 // Set canvas size to match window size
-canvas.width = 3840;   //1024
-canvas.height = 640;   //576
+canvas.width = 3840;   //3840
+canvas.height = 640;   //640 
 
 // Gravity constant
 const gravity = 1;
@@ -22,15 +22,15 @@ const reverseRunImage = new Image();
 reverseRunImage.src = '/client/src/assets/Sprites/RunningSprite(reversed).png'
 
 
-function startGame() {
+//function startGame() {
 // Player class
 class Player {
     constructor() {
         this.speed = 2;
         // Initial position, velocity, and dimensions
         this.position = {
-            x: 1500,
-            y: 100
+            x: 1425,
+            y: 470,
         };
         this.velocity = {
             x: 0,
@@ -93,42 +93,200 @@ class Player {
     }
 }
 
+
+
 const terrainImage = new Image();
 terrainImage.src = '/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
 
 // Platform class
 class Platform {
-    constructor({ x, y }) {
+    constructor({ x, y, width, height }) {
         // Initial position and dimensions
         this.position = {
             x,
             y
         };
-        this.height = 20;
-        this.width = 100;
-        this.image = terrainImage;
+        this.height = height;
+        this.width = width;
     }
 
     // Draw the platform on the canvas
     draw() {
-        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+        c.fillStyle = 'black';//Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
+        c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
 
 let player = new Player();
 let platforms = [
-    new Platform({
-        x: 1500,
-        y: 536
+    new Platform({          //Long Boy #1 Area
+        x: 1400,
+        y: 513,
+        height: 29,
+        width: 420
     }),
     new Platform({
-        x: -400,
-        y: 536
+        x: 1530,
+        y: 487,
+        height: 29,
+        width: 20,
     }),
     new Platform({
-        x: -800,
-        y: 536
-    })
+        x: 1557,
+        y: 472,
+        height: 29,
+        width: 20,
+    }),
+    new Platform({
+        x: 1582,
+        y: 462,
+        height: 29,
+        width: 20,
+    }),
+    new Platform({  //Long boy  Brown Area
+        x: 1607,
+        y: 449,
+        height: 29,
+        width: 72,
+    }),
+    new Platform({
+        x: 1684,
+        y: 462,
+        height: 29,
+        width: 20,
+    }),
+    new Platform({
+        x: 1710,
+        y: 472,
+        height: 29,
+        width: 20,
+    }),
+    new Platform({
+        x: 1736,
+        y: 487,
+        height: 29,
+        width: 20,
+    }),
+    new Platform({          //Floating Platform
+        x: 1827,
+        y: 487,
+        height: 12,
+        width: 30,
+    }),
+    new Platform({          //Floating Platform
+        x: 1878,
+        y: 462,
+        height: 12,
+        width: 30,
+    }),
+    new Platform({          //Floating Platform
+        x: 1929,
+        y: 436,
+        height: 12,
+        width: 30,
+    }),
+    new Platform({          //Floating Platform
+        x: 1827,
+        y: 487,
+        height: 12,
+        width: 30,
+    }),
+    new Platform({          //Floating Platform
+        x: 1993,
+        y: 449,
+        height: 12,
+        width: 30,
+    }),
+    new Platform({          //Floating Platform
+        x: 2057,
+        y: 462,
+        height: 12,
+        width: 30,
+    }),
+    new Platform({          //Floating Platform
+        x: 2108,
+        y: 486,
+        height: 12,
+        width: 30,
+    }),
+    new Platform({          //Long Boy #2 Area
+        x: 2145,
+        y: 512,
+        height: 12,
+        width: 380,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2249,
+        y: 486,
+        height: 12,
+        width: 60,
+    }),
+    new Platform({          //Brown Obscure Obstacles Long
+        x: 2312,
+        y: 473,
+        height: 12,
+        width: 210,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2362,
+        y: 449,
+        height: 12,
+        width: 20,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2428,
+        y: 449,
+        height: 12,
+        width: 20,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2453,
+        y: 423,
+        height: 12,
+        width: 70,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2428,
+        y: 372,
+        height: 12,
+        width: 70,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2338,
+        y: 334,
+        height: 12,
+        width: 70,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2454,
+        y: 295,
+        height: 12,
+        width: 145,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2633,
+        y: 346,
+        height: 12,
+        width: 70,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2734,
+        y: 397,
+        height: 12,
+        width: 45,
+    }),
+    new Platform({          //Brown Obscure Obstacles
+        x: 2811,
+        y: 435,
+        height: 12,
+        width: 45,
+    }),
+    new Platform({          //Long boy area#3
+        x: 2658,
+        y: 512,
+        height: 12,
+        width: 658,
+    }),
 ];
 
 let currentKey
@@ -143,23 +301,182 @@ const keys = {
 };
 
 let scrollOffset = 0;
+function isPlayerBelowHeight(player, height) {
+    return player.position.y > height;
+}
 
 function init() {
     // Create player and platform instances
     player = new Player();
     platforms = [
-        new Platform({
-            x: 0,
-            y: 536
+        new Platform({          //Long Boy #1 Area
+            x: 1400,
+            y: 513,
+            height: 29,
+            width: 420
         }),
         new Platform({
-            x: 400,
-            y: 536
+            x: 1530,
+            y: 487,
+            height: 29,
+            width: 20,
         }),
         new Platform({
-            x: 800,
-            y: 536
-        })
+            x: 1557,
+            y: 472,
+            height: 29,
+            width: 20,
+        }),
+        new Platform({
+            x: 1582,
+            y: 462,
+            height: 29,
+            width: 20,
+        }),
+        new Platform({  //Long boy  Brown Area
+            x: 1607,
+            y: 449,
+            height: 29,
+            width: 72,
+        }),
+        new Platform({
+            x: 1684,
+            y: 462,
+            height: 29,
+            width: 20,
+        }),
+        new Platform({
+            x: 1710,
+            y: 472,
+            height: 29,
+            width: 20,
+        }),
+        new Platform({
+            x: 1736,
+            y: 487,
+            height: 29,
+            width: 20,
+        }),
+        new Platform({          //Floating Platform
+            x: 1827,
+            y: 487,
+            height: 12,
+            width: 30,
+        }),
+        new Platform({          //Floating Platform
+            x: 1878,
+            y: 462,
+            height: 12,
+            width: 30,
+        }),
+        new Platform({          //Floating Platform
+            x: 1929,
+            y: 436,
+            height: 12,
+            width: 30,
+        }),
+        new Platform({          //Floating Platform
+            x: 1827,
+            y: 487,
+            height: 12,
+            width: 30,
+        }),
+        new Platform({          //Floating Platform
+            x: 1993,
+            y: 449,
+            height: 12,
+            width: 30,
+        }),
+        new Platform({          //Floating Platform
+            x: 2057,
+            y: 462,
+            height: 12,
+            width: 30,
+        }),
+        new Platform({          //Floating Platform
+            x: 2108,
+            y: 486,
+            height: 12,
+            width: 30,
+        }),
+        new Platform({          //Long Boy #2 Area
+            x: 2145,
+            y: 512,
+            height: 12,
+            width: 380,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2249,
+            y: 486,
+            height: 12,
+            width: 60,
+        }),
+        new Platform({          //Brown Obscure Obstacles Long
+            x: 2312,
+            y: 473,
+            height: 12,
+            width: 210,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2362,
+            y: 449,
+            height: 12,
+            width: 20,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2428,
+            y: 449,
+            height: 12,
+            width: 20,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2453,
+            y: 423,
+            height: 12,
+            width: 70,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2428,
+            y: 372,
+            height: 12,
+            width: 70,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2338,
+            y: 334,
+            height: 12,
+            width: 70,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2454,
+            y: 295,
+            height: 12,
+            width: 145,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2633,
+            y: 346,
+            height: 12,
+            width: 70,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2734,
+            y: 397,
+            height: 12,
+            width: 45,
+        }),
+        new Platform({          //Brown Obscure Obstacles
+            x: 2811,
+            y: 435,
+            height: 12,
+            width: 45,
+        }),
+        new Platform({          //Long boy area#3
+            x: 2658,
+            y: 512,
+            height: 12,
+            width: 658,
+        }),
     ];
     scrollOffset = 0;
 }
@@ -173,12 +490,14 @@ function detectCollision(player, platform) {
         player.position.x <= platform.position.x + platform.width
     );
 }
+
 const backgroundImage = new Image();
 backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0(copy).jpg';
 
 let offsetX = 1400;
 // Animation loop
 function animate() {
+    console.log("player Position:", player.position.y);
     requestAnimationFrame(animate);
 
     const backgroundX = (-scrollOffset + offsetX) % backgroundImage.width;
@@ -244,7 +563,7 @@ function animate() {
         console.log('You Win');
     }
 
-    if (player.position.y > canvas.height) {
+    if (isPlayerBelowHeight(player, 610)) {
         init();
         console.log('GG, You kinda suck!');
     }
@@ -265,7 +584,7 @@ window.addEventListener('keydown', ({ keyCode }) => {
 
         case 87: // W key for jumping
             if (player.canJump) {
-                player.velocity.y = -12; // Apply upward velocity for jumping
+                player.velocity.y = -10; // Apply upward velocity for jumping
                 player.canJump = false; // Update jump flag
             }
             break;
@@ -309,7 +628,7 @@ window.addEventListener('keyup', ({ keyCode }) => {
 });
 
 
-}
+//}
 
 const startButton = document.getElementById('startButton');
 startButton.addEventListener('click', startGame);
