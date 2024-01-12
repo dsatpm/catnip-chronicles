@@ -94,7 +94,7 @@ class Player {
 }
 
 const terrainImage = new Image();
-terrainImage.src = '/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
+terrainImage.src = '/catnip-chronicles/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
 
 // Platform class
 class Platform {
@@ -174,6 +174,7 @@ function detectCollision(player, platform) {
     );
 }
 const backgroundImage = new Image();
+
 backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0(copy).jpg';
 
 let offsetX = 1400;
