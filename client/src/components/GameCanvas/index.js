@@ -287,7 +287,7 @@ let platforms = [
         height: 12,
         width: 658,
     }),
-];
+]; //a
 
 let currentKey
 // Keyboard input state
