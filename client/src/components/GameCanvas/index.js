@@ -27,7 +27,7 @@ class Player {
         this.height = 30;
 
         this.image = new Image();
-        this.image.src = '/client/src/assets/RunningSprite.png';
+        this.image.src = '/catnip-chronicles/client/src/assets/RunningSprite.png';
         this.frames = 24;
 
         this.frameIndex = 0;
@@ -71,7 +71,7 @@ class Player {
 }
 
 const terrainImage = new Image();
-terrainImage.src = '/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
+terrainImage.src = '/catnip-chronicles/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
 
 // Platform class
 class Platform {
@@ -150,7 +150,7 @@ function detectCollision(player, platform) {
     );
 }
 const backgroundImage = new Image();
-backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0.png';
+backgroundImage.src = '/catnip-chronicles/client/src/assets/catnipChroniclesLevel0.png';
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
