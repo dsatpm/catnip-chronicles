@@ -1,0 +1,33 @@
+.header {
+	height: 100vh;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+
+	h1 {
+		font-size: 140px;
+		font-weight: bolder;
+		text-align: center;
+		width: 80%;
+		z-index: 4;
+	}
+
+	.bg2 {
+		background-image: url('../../assets/cat-bg2.png');
+		background-size: cover;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		z-index: 2;
+	}
+
+	.bg1 {
+		background-image: url('../../assets/cat-bg.png');
+		background-size: cover;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		z-index: 3;
+	}
+}

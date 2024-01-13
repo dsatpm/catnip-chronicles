@@ -42,4 +42,19 @@ module.exports = {
 		const token = signToken(user);
 		res.json({ token, user });
 	},
+
+	async startGame({ user }, res) {
+		const foundUser = await User.findOne({
+			$or: [{ _id: user._id }, { username: user.username }],
+		});
+
+		if (!foundUser) {
+			return res
+				.status(400)
+				.json({ message: 'Cannot find a user with this id!' });
+		}
+		foundUser.gameStarted = true;
+		await foundUser.save();
+		res.json(foundUser);
+	},
 };

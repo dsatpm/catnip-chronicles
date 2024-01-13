@@ -12,7 +12,7 @@ const Signup = () => {
 		e.preventDefault();
 		console.log(username, password);
 		try {
-			const res = await axios.post('http://localhost:5000/auth/signup', {
+			const res = await axios.post('http://localhost:5001/auth/signup', {
 				username,
 				password,
 			});
@@ -24,32 +24,37 @@ const Signup = () => {
 	};
 	return (
 		<>
-			<section id='signup' className='signup'>
-				<form onSubmit={handleSubmit}>
-					<h2>Signup</h2>
-					<input
-						type='username'
-						placeholder='Create Username'
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						autoComplete='off'
-						required
-					/>
-					<input
-						type='password'
-						placeholder='Create Password'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						autoComplete='off'
-						required
-					/>
-					<button type='submit'>
-						<span>Signup</span>
+			<section
+				id='signup'
+				className='signup'>
+				<div className='form-container'>
+					<form onSubmit={handleSubmit}>
+						<h2>Adventure Awaits!</h2>
+						<input
+							type='username'
+							placeholder='Create Username'
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+							autoComplete='off'
+							required
+						/>
+						<input
+							type='password'
+							placeholder='Create Password'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							autoComplete='off'
+							required
+						/>
+						<button type='submit'>
+							<span>Signup</span>
 						</button>
 						<p>
-							Already have an account? <Link to='/login'>Login</Link>
+							Already have an account?{' '}
+							<Link to='/login'>Login</Link>
 						</p>
-				</form>
+					</form>
+				</div>
 			</section>
 		</>
 	);
