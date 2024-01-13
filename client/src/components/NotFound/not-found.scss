@@ -1,0 +1,24 @@
+.not-found {
+	height: 100vh;
+	background: url('../../assets/404.png');
+	background-position: center;
+	background-size: cover;
+
+	.wrapper {
+height: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+
+		h1 {
+			font-size: 120px;
+			text-align: center;
+		}
+
+		h2 {
+			font-size: 40px;
+			text-align: center;
+		}
+	}
+}

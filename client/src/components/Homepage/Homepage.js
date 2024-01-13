@@ -1,5 +1,4 @@
 import './homepage.scss';
-import ParallaxBackground from '../ParallaxBackground/ParallaxBackground';
 import { Link } from 'react-router-dom';
 
 const Homepage = () => {
@@ -8,7 +7,6 @@ const Homepage = () => {
 			<section
 				id='homepage'
 				className='homepage'>
-				<ParallaxBackground />
 				<div className='text-container'>
 					<div className='wrapper'>
 						<h1>Welcome!</h1>
