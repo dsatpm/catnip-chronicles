@@ -1,7 +1,13 @@
+@font-face {
+	font-family: 'PressStart2P';
+	src: url("./assets/Fonts/PressStart2P-Regular.ttf") format('truetype');
+  }
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	
 }
 
 html {
