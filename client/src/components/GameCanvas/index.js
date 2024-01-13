@@ -29,7 +29,7 @@ class Player {
         this.speed = 2;
         // Initial position, velocity, and dimensions
         this.position = {
-            x: 1425,
+            x: 1425,                //1425 Start position
             y: 470,
         };
         this.velocity = {
@@ -100,7 +100,7 @@ terrainImage.src = '/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
 
 // Platform class
 class Platform {
-    constructor({ x, y, width, height }) {
+    constructor({ x, y, width, height, badPlatform = false}) {
         // Initial position and dimensions
         this.position = {
             x,
@@ -108,11 +108,12 @@ class Platform {
         };
         this.height = height;
         this.width = width;
+        this.badPlatform = badPlatform;
     }
 
     // Draw the platform on the canvas
     draw() {
-        c.fillStyle = 'black';//Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
+        c.fillStyle = 'rgba(0, 0, 0, 0)';        //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -123,7 +124,7 @@ let platforms = [
         x: 1400,
         y: 513,
         height: 29,
-        width: 420
+        width: 420,
     }),
     new Platform({
         x: 1530,
@@ -287,7 +288,80 @@ let platforms = [
         height: 12,
         width: 658,
     }),
-]; //a
+    new Platform({          //Small Platform
+        x: 3336,
+        y: 500,
+        height: 12,
+        width: 32,
+    }),
+    new Platform({          //Small Platform
+        x: 2954,
+        y: 475,
+        height: 10,
+        width: 340,
+        badPlatform: true
+    }),
+    new Platform({          //Small Platform
+        x: 3400,
+        y: 510,
+        height: 12,
+        width: 300,
+    }),
+    new Platform({          //Small Platform
+        x: 3400,
+        y: 487,
+        height: 12,
+        width: 32,
+    }),
+    new Platform({          //Small Platform
+        x: 3438,
+        y: 462,
+        height: 12,
+        width: 32,
+    }),
+    new Platform({          //Small Platform
+        x: 3477,
+        y: 435,
+        height: 12,
+        width: 32,
+    }),
+    new Platform({          //Small Platform
+        x: 3516,
+        y: 410,
+        height: 12,
+        width: 108,
+    }),
+    new Platform({          //Small Platform
+        x: 3630,
+        y: 435,
+        height: 12,
+        width: 32,
+    }),
+    new Platform({          //Small Platform
+        x: 3669,
+        y: 462,
+        height: 12,
+        width: 32,
+    }),
+    new Platform({          //Small Platform
+        x: 3708,
+        y: 487,
+        height: 12,
+        width: 32,
+    }),
+    new Platform({          //Small Platform
+        x: 3746,
+        y: 513,
+        height: 12,
+        width: 32,
+    }),
+    new Platform({          //Small Platform
+        x: 3784,
+        y: 538,
+        height: 12,
+        width: 32,
+    }),
+];
 
 let currentKey
 // Keyboard input state
@@ -313,7 +387,7 @@ function init() {
             x: 1400,
             y: 513,
             height: 29,
-            width: 420
+            width: 420,
         }),
         new Platform({
             x: 1530,
@@ -477,18 +551,105 @@ function init() {
             height: 12,
             width: 658,
         }),
+        new Platform({          //Small Platform
+            x: 3336,
+            y: 500,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 2954,
+            y: 475,
+            height: 10,
+            width: 340,
+            badPlatform: true
+        }),
+        new Platform({          //Small Platform
+            x: 3400,
+            y: 510,
+            height: 12,
+            width: 300,
+        }),
+        new Platform({          //Small Platform
+            x: 3400,
+            y: 487,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 3438,
+            y: 462,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 3477,
+            y: 435,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 3516,
+            y: 410,
+            height: 12,
+            width: 108,
+        }),
+        new Platform({          //Small Platform
+            x: 3630,
+            y: 435,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 3669,
+            y: 462,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 3708,
+            y: 487,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 3746,
+            y: 513,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 3784,
+            y: 538,
+            height: 12,
+            width: 32,
+        }),
     ];
+
+
+
     scrollOffset = 0;
 }
 
 // Collision detection function between player and platforms
 function detectCollision(player, platform) {
-    return (
+    const isColliding =
         player.position.y + player.height <= platform.position.y &&
         player.position.y + player.height + player.velocity.y >= platform.position.y &&
         player.position.x + player.width >= platform.position.x &&
-        player.position.x <= platform.position.x + platform.width
-    );
+        player.position.x <= platform.position.x + platform.width &&
+        (!platform.badPlatform || (platform.badPlatform && player.velocity.y > 0));
+
+    if (isColliding) {
+        if (platform.badPlatform) {
+            init(); // Call init() if colliding with a badPlatform
+        } else {
+            player.velocity.y = 0;
+            player.canJump = true; // Reset jump when player is on a platform
+        }
+    }
+
+    return isColliding;
 }
 
 const backgroundImage = new Image();
@@ -536,12 +697,17 @@ function animate() {
     }
 
     // Check for collision with the platform and stop vertical movement if colliding
-    platforms.forEach((platform) => {
+    platforms.forEach((platform, index) => {
         if (detectCollision(player, platform)) {
+            if (platform.badPlatform && player.velocity.y > 0) {
+                platform.splice(index, 1);
+                init();
+            } else {
             player.velocity.y = 0;
             player.canJump = true; // Reset jump when player is on a platform
         }
-    })
+    }
+});
 
     if (
         keys.right.pressed && currentKey === 'right' && player.currentSprite !== player.sprites.run.right
