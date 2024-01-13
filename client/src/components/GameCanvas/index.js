@@ -113,7 +113,7 @@ class Platform {
 
     // Draw the platform on the canvas
     draw() {
-        c.fillStyle = 'rgba(0, 0, 0, 0)';        //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
+        c.fillStyle = 'black';         //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
