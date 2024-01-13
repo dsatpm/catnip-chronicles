@@ -10,7 +10,7 @@ const app = express();
 
 
 // set up Express app
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5001;
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.urlencoded({ extended: true }));
