@@ -26,11 +26,11 @@ reverseRunImage.src = '/client/src/assets/Sprites/RunningSprite(reversed).png'
 // Player class
 class Player {
     constructor() {
-        this.speed = 35;   //Original speed 2
+        this.speed = 2;   //Original speed 2
         // Initial position, velocity, and dimensions
         this.position = {
-            x: 3500,                //1425 Start position
-            y: 170,
+            x: 1425,                //1425 Start position
+            y: 270,
         };
         this.velocity = {
             x: 0,
@@ -113,7 +113,7 @@ class Platform {
 
     // Draw the platform on the canvas
     draw() {
-        c.fillStyle = 'black';         //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
+        c.fillStyle = 'rgba(0, 0, 0, 0)';       //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -503,6 +503,12 @@ function init() {
     // Create player and platform instances
     player = new Player();
     platforms = [
+        new Platform({       //TOP LONG BOY
+            x: 1400,
+            y: 200,
+            height: 12,
+            width: 10000,
+        }),
         new Platform({          //Long Boy #1 Area
             x: 1400,
             y: 513,
@@ -744,6 +750,117 @@ function init() {
             height: 12,
             width: 32,
         }),
+        new Platform({          //Small Platform
+            x: 3820,
+            y: 600,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 3899,
+            y: 600,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 3976,
+            y: 600,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 4053,
+            y: 588,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 4091,
+            y: 576,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 4130,
+            y: 564,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 4206,
+            y: 538,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 4244,
+            y: 525,
+            height: 12,
+            width: 32,
+        }),
+        new Platform({          //Small Platform
+            x: 4284,
+            y: 512,
+            height: 12,
+            width: 390,
+        }),
+        new Platform({          //Small Platform
+            x: 4320,
+            y: 440,
+            height: 5,
+            width: 40,
+            badPlatform: true
+        }),new Platform({          //Small Platform
+            x: 4387,
+            y: 495,
+            height: 35,
+            width: 35,
+                                //badPlatform: true
+        }),
+        new Platform({          //Small Platform
+            x: 4445,
+            y: 440,
+            height: 5,
+            width: 40,
+            badPlatform: true
+        }),
+        new Platform({          //Small Platform
+            x: 4500,
+            y: 486,
+            height: 12,
+            width: 24,
+        }),
+        new Platform({          //Small Platform
+            x: 4550,
+            y: 460,
+            height: 12,
+            width: 24,
+        }),
+        new Platform({          //Small Platform
+            x: 4600,
+            y: 449,
+            height: 12,
+            width: 38,
+        }),
+        new Platform({          //Small Platform
+            x: 4635,
+            y: 450,
+            height: 12,
+            width: 40,
+            badPlatform: true
+        }),
+        new Platform({          //Small Platform
+            x: 4705,
+            y: 512,
+            height: 12,
+            width: 20,
+        }),
+        new Platform({          //Small Platform
+            x: 4757,
+            y: 512,
+            height: 12,
+            width: 20,
+        }),
     ];
 
 
@@ -917,5 +1034,5 @@ window.addEventListener('keyup', ({ keyCode }) => {
 
 //}
 
-const startButton = document.getElementById('startButton');
-startButton.addEventListener('click', startGame);
+//const startButton = document.getElementById('startButton');
+//startButton.addEventListener('click', startGame);
