@@ -26,11 +26,11 @@ reverseRunImage.src = '/client/src/assets/Sprites/RunningSprite(reversed).png'
 // Player class
 class Player {
     constructor() {
-        this.speed = 2;   //Original speed 2
+        this.speed = 35;   //Original speed 2
         // Initial position, velocity, and dimensions
         this.position = {
-            x: 1425,                //1425 Start position
-            y: 270,
+            x: 3425,                //1425 Start position
+            y: 170,
         };
         this.velocity = {
             x: 0,
@@ -113,7 +113,7 @@ class Platform {
 
     // Draw the platform on the canvas
     draw() {
-        c.fillStyle = 'rgba(0, 0, 0, 0)';       //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
+        c.fillStyle = 'black';      //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -442,6 +442,20 @@ let platforms = [
         badPlatform: true
     }),
     new Platform({          //Small Platform
+        x: 4525,
+        y: 483,
+        height: 5,
+        width: 22,
+        badPlatform: true
+    }),
+    new Platform({          //Small Platform
+        x: 4575,
+        y: 458,
+        height: 5,
+        width: 22,
+        badPlatform: true
+    }),
+    new Platform({          //Small Platform
         x: 4500,
         y: 486,
         height: 12,
@@ -478,6 +492,82 @@ let platforms = [
         height: 12,
         width: 20,
     }),
+    new Platform({          //Small Platform
+        x: 4809,
+        y: 512,
+        height: 12,
+        width: 430,
+    }),
+    new Platform({          //Small Platform
+        x: 4859,
+        y: 486,
+        height: 30,
+        width: 20,
+    }),
+    new Platform({          //Small Platform
+        x: 4884,
+        y: 474,
+        height: 40,
+        width: 20,
+    }),
+    new Platform({          //Small Platform
+        x: 4910,
+        y: 462,
+        height: 50,
+        width: 20,
+    }),
+    new Platform({          //Small Platform
+        x: 4936,
+        y: 448,
+        height: 70,
+        width: 20,
+    }),
+    new Platform({          //Long
+        x: 4961,
+        y: 435,
+        height: 80,
+        width: 72,
+    }),
+    new Platform({          //Small Platform
+        x: 5038,
+        y: 448,
+        height: 70,
+        width: 20,
+    }),
+    new Platform({          //Small Platform
+        x: 5063,
+        y: 462,
+        height: 50,
+        width: 20,
+    }),
+    new Platform({          //Small Platform
+        x: 5089,
+        y: 474,
+        height: 40,
+        width: 20,
+    }),
+    new Platform({          //Small Platform
+        x: 5115,
+        y: 486,
+        height: 30,
+        width: 20,
+    }),
+    new Platform({          //Small Platform
+        x: 5140,
+        y: 490,
+        height: 30,
+        width: 40,
+        badPlatform: true
+    }),
+    new Platform({          //Small Platform
+        x: 4845,
+        y: 494,
+        height: 30,
+        width: 10,
+        badPlatform: true
+    }),
+    
+    
     
     
     
@@ -860,6 +950,80 @@ function init() {
             y: 512,
             height: 12,
             width: 20,
+        }),
+        new Platform({          //Small Platform
+            x: 4809,
+            y: 512,
+            height: 12,
+            width: 430,
+        }),
+        new Platform({          //Small Platform
+            x: 4859,
+            y: 486,
+            height: 30,
+            width: 20,
+        }),
+        new Platform({          //Small Platform
+            x: 4884,
+            y: 474,
+            height: 40,
+            width: 20,
+        }),
+        new Platform({          //Small Platform
+            x: 4910,
+            y: 462,
+            height: 50,
+            width: 20,
+        }),
+        new Platform({          //Small Platform
+            x: 4936,
+            y: 448,
+            height: 70,
+            width: 20,
+        }),
+        new Platform({          //Long
+            x: 4961,
+            y: 435,
+            height: 80,
+            width: 72,
+        }),
+        new Platform({          //Small Platform
+            x: 5038,
+            y: 448,
+            height: 70,
+            width: 20,
+        }),
+        new Platform({          //Small Platform
+            x: 5063,
+            y: 462,
+            height: 50,
+            width: 20,
+        }),
+        new Platform({          //Small Platform
+            x: 5089,
+            y: 474,
+            height: 40,
+            width: 20,
+        }),
+        new Platform({          //Small Platform
+            x: 5115,
+            y: 486,
+            height: 30,
+            width: 20,
+        }),
+        new Platform({          //Small Platform
+            x: 5140,
+            y: 490,
+            height: 30,
+            width: 40,
+            badPlatform: true
+        }),
+        new Platform({          //Small Platform
+            x: 4845,
+            y: 494,
+            height: 30,
+            width: 10,
+            badPlatform: true
         }),
     ];
 
