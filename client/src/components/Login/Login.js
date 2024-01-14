@@ -12,7 +12,7 @@ const Login = () => {
 		e.preventDefault();
 		console.log(username, password);
 		try {
-			const res = await axios.post('http://localhost:5000/auth/login', {
+			const res = await axios.post('http://localhost:5001/auth/login', {
 				username,
 				password,
 			});
@@ -32,7 +32,7 @@ const Login = () => {
 						<h2>Begin Adventure</h2>
 						<input
 							type='username'
-							placeholder='Username'
+							placeholder='Mr_Whiskers'
 							value={username}
 							onChange={(e) => setUsername(e.target.value)}
 							autoComplete='off'
@@ -40,7 +40,7 @@ const Login = () => {
 						/>
 						<input
 							type='password'
-							placeholder='Password'
+							placeholder='Paws-word'
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							autoComplete='off'
