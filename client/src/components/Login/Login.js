@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './login.scss';
 
@@ -24,32 +24,35 @@ const Login = () => {
 	};
 	return (
 		<>
-			<section id='login' className='login'>
-				<form onSubmit={handleSubmit}>
-					<h2>Catnip Chronicles</h2>
-					<input
-						type='username'
-						placeholder='Username'
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						autoComplete='off'
-						required
-					/>
-					<input
-						type='password'
-						placeholder='Password'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						autoComplete='off'
-						required
-					/>
-					<button type='submit'>
-						<span>Login</span>
-					</button>
-					<p>
-						Don't have an account? <Link to='/signup'>Signup</Link>
-					</p>
-				</form>
+			<section
+				id='login'
+				className='login'>
+				<div className='form-container'>
+					<form onSubmit={handleSubmit}>
+						<h2>Begin Adventure</h2>
+						<input
+							type='username'
+							placeholder='Username'
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+							autoComplete='off'
+							required
+						/>
+						<input
+							type='password'
+							placeholder='Password'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							autoComplete='off'
+							required
+						/>
+						<button type='submit'>Login</button>
+						<p>
+							Don't have an account?{' '}
+							<Link to='/signup'>Signup</Link>
+						</p>
+					</form>
+				</div>
 			</section>
 		</>
 	);
