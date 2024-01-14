@@ -12,7 +12,7 @@ const Signup = () => {
 		e.preventDefault();
 		console.log(username, password);
 		try {
-			const res = await axios.post('http://localhost:5000/auth/signup', {
+			const res = await axios.post('http://localhost:5001/auth/signup', {
 				username,
 				password,
 			});

@@ -1,5 +1,8 @@
 // Get canvas and 2D rendering context
-const canvas = document.querySelector('canvas');
+
+export const initializeGame = () => {
+
+const canvas = document.getElementById('gameCanvas');
 const c = canvas.getContext('2d');
 
 // Set canvas size to match window size
@@ -1206,6 +1209,7 @@ window.addEventListener('keyup', ({ keyCode }) => {
             break;
     }
 });
+};
 
 
 //}

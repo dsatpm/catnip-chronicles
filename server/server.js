@@ -6,9 +6,6 @@ const cors = require('cors');
 const routes = require('./routes');
 const app = express();
 
-// connect to MongoDB
-
-
 // set up Express app
 const PORT = process.env.PORT || 5001;
 
