@@ -1,12 +1,14 @@
-import './home.scss';
 import { Link } from 'react-router-dom';
+import Header from '../Header/Header';
+import './home.scss';
 
 const Home = () => {
 	return (
 		<>
-			<section
+		<Header />
+		<section
 				id='homepage'
-				className='homepage'>
+				className='home'>
 				<div className='text-container'>
 					<div className='wrapper'>
 						<h1>Welcome!</h1>
