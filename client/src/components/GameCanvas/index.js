@@ -21,10 +21,17 @@ runImage.src = '/client/src/assets/Sprites/RunningSprite.png'
 const reverseRunImage = new Image();
 reverseRunImage.src = '/client/src/assets/Sprites/RunningSprite(reversed).png'
 
+const jumpSound = new Audio('/client/src/assets/Audio/386651__jalastram__sfx_jump_40.wav');
+
+const deathSound = new Audio('/client/src/assets/Audio/tom-scream_d1PFYKW.mp3');
+
 //function startGame() {
 // Player class
 class Player {
     constructor() {
+
+        this.frameDelay = 10;
+        this.currentFrameDelay = 0;
         this.speed = 2;   //Original speed 2
         // Initial position, velocity, and dimensions
         this.position = {
@@ -75,8 +82,14 @@ class Player {
 
     // Update player position and apply gravity
     update() {
-        this.frames++
-        if (this.frames > 16) this.frames = 0
+        this.currentFrameDelay++;
+
+        if (this.currentFrameDelay >= this.frameDelay) {
+            this.frames++;
+            if (this.frames > 16) this.frames = 0;
+            this.currentFrameDelay = 0;
+        }
+
         this.draw();
         this.position.y += this.velocity.y;
         this.position.x += this.velocity.x;
@@ -91,7 +104,6 @@ class Player {
         }
     }
 }
-
 
 
 const terrainImage = new Image();
@@ -112,7 +124,7 @@ class Platform {
 
     // Draw the platform on the canvas
     draw() {
-        c.fillStyle = 'rgba(0, 0, 0, 0)';     //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
+        c.fillStyle = 'black';     //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -426,12 +438,6 @@ let platforms = [
         height: 5,
         width: 40,
         badPlatform: true
-    }),new Platform({          //Small Platform
-        x: 4387,
-        y: 495,
-        height: 35,
-        width: 35,
-                            //badPlatform: true
     }),
     new Platform({          //Small Platform
         x: 4445,
@@ -468,16 +474,15 @@ let platforms = [
     }),
     new Platform({          //Small Platform
         x: 4600,
-        y: 449,
+        y: 462,
         height: 12,
         width: 38,
     }),
     new Platform({          //Small Platform
         x: 4635,
-        y: 450,
+        y: 462,
         height: 12,
         width: 40,
-        badPlatform: true
     }),
     new Platform({          //Small Platform
         x: 4705,
@@ -894,12 +899,6 @@ function init() {
             height: 5,
             width: 40,
             badPlatform: true
-        }),new Platform({          //Small Platform
-            x: 4387,
-            y: 495,
-            height: 35,
-            width: 35,
-                                //badPlatform: true
         }),
         new Platform({          //Small Platform
             x: 4445,
@@ -936,16 +935,15 @@ function init() {
         }),
         new Platform({          //Small Platform
             x: 4600,
-            y: 449,
+            y: 462,
             height: 12,
             width: 38,
         }),
         new Platform({          //Small Platform
             x: 4635,
-            y: 450,
+            y: 462,
             height: 12,
             width: 40,
-            badPlatform: true
         }),
         new Platform({          //Small Platform
             x: 4705,
@@ -1035,9 +1033,6 @@ function init() {
         }),
     ];
     
-
-
-
     scrollOffset = 0;
 }
 
@@ -1050,21 +1045,25 @@ function detectCollision(player, platform) {
         player.position.x <= platform.position.x + platform.width &&
         (!platform.badPlatform || (platform.badPlatform && player.velocity.y > 0));
 
-    if (isColliding) {
-        if (platform.badPlatform) {
-            init(); // Call init() if colliding with a badPlatform
-        } else {
-            player.velocity.y = 0;
-            player.canJump = true; // Reset jump when player is on a platform
+        if (isColliding) {
+            if (platform.badPlatform) {
+                deathSound.play()
+                deathSound.addEventListener('ended', function() {
+                    init();
+                });
+            } else {
+                player.velocity.y = 0;
+                player.canJump = true; // Reset jump when player is on a platform
+            }
         }
+    
+        return isColliding;
     }
-
-    return isColliding;
-}
 
 const backgroundImage = new Image();
 
-backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0(copy).jpg';
+//backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0(copy).jpg';
+backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0Adjusted.png';
 
 let offsetX = 1400;  //1400
 // Animation loop
@@ -1140,12 +1139,14 @@ function animate() {
         console.log('You Win');
     }
 
-    if (isPlayerBelowHeight(player, 610)) {
-        init();
+    if (isPlayerBelowHeight(player, 605)) {
+        deathSound.play();
+        deathSound.addEventListener('ended', function() {
+            init();
         console.log('GG, You kinda suck!');
+    })  
     }
 }
-
 animate();
 
 
@@ -1163,6 +1164,8 @@ window.addEventListener('keydown', ({ keyCode }) => {
             if (player.canJump) {
                 player.velocity.y = -10; // Apply upward velocity for jumping
                 player.canJump = false; // Update jump flag
+                jumpSound.play();
+                console.log('jump Sound');
             }
             break;
 
