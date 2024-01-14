@@ -21,16 +21,15 @@ runImage.src = '/client/src/assets/Sprites/RunningSprite.png'
 const reverseRunImage = new Image();
 reverseRunImage.src = '/client/src/assets/Sprites/RunningSprite(reversed).png'
 
-
 //function startGame() {
 // Player class
 class Player {
     constructor() {
-        this.speed = 35;   //Original speed 2
+        this.speed = 2;   //Original speed 2
         // Initial position, velocity, and dimensions
         this.position = {
-            x: 3425,                //1425 Start position
-            y: 170,
+            x: 1425,                //1425 Start position
+            y: 270,
         };
         this.velocity = {
             x: 0,
@@ -113,7 +112,7 @@ class Platform {
 
     // Draw the platform on the canvas
     draw() {
-        c.fillStyle = 'black';      //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
+        c.fillStyle = 'rgba(0, 0, 0, 0)';     //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';  
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -450,7 +449,7 @@ let platforms = [
     }),
     new Platform({          //Small Platform
         x: 4575,
-        y: 458,
+        y: 455,
         height: 5,
         width: 22,
         badPlatform: true
@@ -566,11 +565,6 @@ let platforms = [
         width: 10,
         badPlatform: true
     }),
-    
-    
-    
-    
-    
 ];
 
 let currentKey
@@ -915,6 +909,20 @@ function init() {
             badPlatform: true
         }),
         new Platform({          //Small Platform
+            x: 4525,
+            y: 483,
+            height: 5,
+            width: 22,
+            badPlatform: true
+        }),
+        new Platform({          //Small Platform
+            x: 4575,
+            y: 455,
+            height: 5,
+            width: 22,
+            badPlatform: true
+        }),
+        new Platform({          //Small Platform
             x: 4500,
             y: 486,
             height: 12,
@@ -1026,6 +1034,7 @@ function init() {
             badPlatform: true
         }),
     ];
+    
 
 
 
