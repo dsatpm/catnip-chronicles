@@ -13,7 +13,7 @@
       margin: 0;
       background: url("/catnip-chronicles/client/src/assets/bossLevel.png") no-repeat center center fixed;
       background-size: 1000px;
-      background-color: black;
+      background-color: rgb(0, 0, 0);
     }
     .character-container {
       display: flex;
@@ -38,11 +38,21 @@
         position: absolute;
         bottom: 60px;
         left: 200px;
+        color: aliceblue;
     }
     .Boss {
       width: 550px;
       height: 550px;
       margin: 10px;
+      position: absolute;
+      bottom: 50px;
+      right: 300px;
+    }
+    #boss-health{
+      color: aliceblue;
+      position: absolute;
+      bottom: 65px;
+      right: 500px
     }
 
     .health-bar {
@@ -50,11 +60,14 @@
       height: 20px;
       background-color: red;
       margin-top: 10px;
+      position: absolute;
+      bottom:25px ;
+      right: 500px;
     }
     .actions-container {
      position: absolute;
      bottom: 0;
-     left: 600px;
+     left: 500px;
      color:white
     }
     .bottom-container {
