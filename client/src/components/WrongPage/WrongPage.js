@@ -1,13 +1,13 @@
-import './not-found.scss';
+import './wrong-page.scss';
 import { Link } from 'react-router-dom';
 
-const NotFound = () => {
+const WrongPage = () => {
 	return (
 		<>
-			<section className='not-found'>
+			<section className='wrong-page'>
 				<div className='wrapper'>
 					<h1>Error 404 ~</h1>
-					<h2>Oopsie-daisy! This is the wrong place for you.</h2>
+					<h2>You caught me taking a cat nap...</h2>
 					<Link to='/'>Go back to the homepage.</Link>
 				</div>
 			</section>
@@ -15,4 +15,4 @@ const NotFound = () => {
 	);
 };
 
-export default NotFound;
+export default WrongPage;

@@ -3,6 +3,7 @@ const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 module.exports = {
+
 	async getUser({ user = null, params }, res) {
 		const foundUser = await User.findOne({
 			$or: [{ _id: user._id }, { username: user.username }],
@@ -42,4 +43,22 @@ module.exports = {
 		const token = signToken(user);
 		res.json({ token, user });
 	},
+
+	async startGame({ user }, res) {
+  // Check if the user is already in a game
+  const currentGame = await Game.findOne({ user: user._id, status: 'in progress' });
+  if (currentGame) {
+    return res.status(400).json({ message: 'You are already in a game!' });
+  }
+
+  // Create a new game
+  const game = await Game.create({
+    user: user._id,
+    state: gameState,
+    status: 'in progress',
+  });
+
+  // Notify the user
+  res.json({ message: 'Game started!', game });
+}
 };

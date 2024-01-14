@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from'react-router-dom';
+import { Link, useNavigate } from'react-router-dom';
 import axios from 'axios';
 import './login.scss';
 
 const Login = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -16,6 +17,7 @@ const Login = () => {
 				password,
 			});
 			console.log(res);
+			navigate('/game');
 		} catch (err) {
 			console.log(err);
 		}
