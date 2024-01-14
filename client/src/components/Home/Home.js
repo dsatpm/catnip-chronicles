@@ -1,7 +1,7 @@
-import './homepage.scss';
+import './home.scss';
 import { Link } from 'react-router-dom';
 
-const Homepage = () => {
+const Home = () => {
 	return (
 		<>
 			<section
@@ -51,4 +51,4 @@ const Homepage = () => {
 	);
 };
 
-export default Homepage;
+export default Home;

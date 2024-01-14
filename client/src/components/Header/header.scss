@@ -2,12 +2,8 @@
   font-family: 'PressStart2P';
   src: url("../../assets/Fonts/PressStart2P-Regular.ttf") format('truetype');
 }
+
 .header {
-  font-family: 'PressStart2P';
-}
-
-
-.parallax-bg {
   height: 100%;
   width: 100%;
   position: relative;
@@ -17,6 +13,7 @@
   overflow: hidden;
 
   h1 {
+    font-family: 'PressStart2P';
     position: absolute;
     top: 40px;
     font-size: 100px;
