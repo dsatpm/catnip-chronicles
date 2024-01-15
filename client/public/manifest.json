@@ -1,0 +1,27 @@
+{
+    "name": "Catnip Chronicles",
+    "short_name": "Cat!",
+    "description": "A retro sidescroller app featuring a feline hero",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#87CEEB",
+    "icons": [
+      {
+        "src": "../src/assets/icons/cat192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+        
+      },
+      {
+        "src": "../src/assets/icons/cat512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+        
+      }
+
+    ]
+  }
+    
