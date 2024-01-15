@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home/Home';
-import Game from './components/Game/Game';
+import Canvas from './components/Canvas/Canvas';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import NotFound from './components/NotFound/NotFound';
@@ -16,7 +16,7 @@ function App() {
 				/>
 				<Route
 					path='/game'
-					element={<Game />}
+					element={<Canvas />}
 				/>
 				<Route
 					path='/login'

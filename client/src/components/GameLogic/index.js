@@ -1,9 +1,8 @@
 // Get canvas and 2D rendering context
 
-export const initializeGame = () => {
 
-const canvas = document.getElementById('gameCanvas');
-const c = canvas.getContext('2d');
+
+function initializeGame(canvas, c) {
 
 // Set canvas size to match window size
 canvas.width = 3840;   //3840
@@ -28,7 +27,6 @@ const jumpSound = new Audio('/client/src/assets/Audio/386651__jalastram__sfx_jum
 
 const deathSound = new Audio('/client/src/assets/Audio/tom-scream_d1PFYKW.mp3');
 
-//function startGame() {
 // Player class
 class Player {
     constructor() {
@@ -591,7 +589,7 @@ function isPlayerBelowHeight(player, height) {
     return player.position.y > height;
 }
 
-function init() {
+function initializeGame() {
     // Create player and platform instances
     player = new Player();
     platforms = [
@@ -1052,7 +1050,7 @@ function detectCollision(player, platform) {
             if (platform.badPlatform) {
                 deathSound.play()
                 deathSound.addEventListener('ended', function() {
-                    init();
+                    initializeGame();
                 });
             } else {
                 player.velocity.y = 0;
@@ -1063,10 +1061,12 @@ function detectCollision(player, platform) {
         return isColliding;
     }
 
-const backgroundImage = new Image();
-
-//backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0(copy).jpg';
+let backgroundImage = new Image();
 backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0Adjusted.png';
+
+backgroundImage.addEventListener('load', function() {
+    animate();
+});
 
 let offsetX = 1400;  //1400
 // Animation loop
@@ -1076,7 +1076,8 @@ function animate() {
 
     const backgroundX = (-scrollOffset + offsetX) % backgroundImage.width;
     c.clearRect(0, 0, canvas.width, canvas.height);
-    c.drawImage(backgroundImage, backgroundX, 0, canvas.width, canvas.height);
+     c.drawImage(backgroundImage, backgroundX, 0, canvas.width, canvas.height);
+
 
     // Update and draw player
     player.update();
@@ -1114,7 +1115,7 @@ function animate() {
         if (detectCollision(player, platform)) {
             if (platform.badPlatform && player.velocity.y > 0) {
                 platform.splice(index, 1);
-                init();
+                initializeGame();
             } else {
             player.velocity.y = 0;
             player.canJump = true; // Reset jump when player is on a platform
@@ -1145,7 +1146,7 @@ function animate() {
     if (isPlayerBelowHeight(player, 605)) {
         deathSound.play();
         deathSound.addEventListener('ended', function() {
-            init();
+            initializeGame();
         console.log('GG, You kinda suck!');
     })  
     }
@@ -1183,6 +1184,8 @@ window.addEventListener('keydown', ({ keyCode }) => {
         case 32: // Space key
             console.log('space');
             break;
+            default:
+                break;
     }
 });
 
@@ -1207,12 +1210,10 @@ window.addEventListener('keyup', ({ keyCode }) => {
         case 32: // Space key
             console.log('space');
             break;
+            default:
+                break;
     }
 });
 };
 
-
-//}
-
-//const startButton = document.getElementById('startButton');
-//startButton.addEventListener('click', startGame);
+export default initializeGame;
