@@ -33,6 +33,10 @@ const Canvas = (props) => {
 		reverseRunImage.src =
 			reverseRun;
 
+	//	const deathAudio = new Audio();
+	//	deathAudio.src = deathSound;
+
+
 		// Player class
 		class Player {
 			constructor() {
@@ -1170,26 +1174,24 @@ const Canvas = (props) => {
 
 		// Collision detection function between player and platforms
 		function detectCollision(player, platform) {
-			const playerBottom = player.position.y + player.height;
-			const platformTop = platform.position.y;
-			const playerRight = player.position.x + player.width;
-			const platformLeft = platform.position.x;
-			
 			const isColliding =
-					playerBottom >= platformTop &&
-					player.position.y <= platform.position.y + platform.height &&
-					playerRight >= platformLeft &&
-					player.position.x <= platformLeft + platform.width;
-	
-			if (isColliding) {
-					// Handle collision actions here
-					player.position.y = platformTop - player.height; // Adjust player position
-					player.velocity.y = 0;
-					player.canJump = true;
+				player.position.y + player.height <= platform.position.y &&
+				player.position.y + player.height + player.velocity.y >= platform.position.y &&
+				player.position.x + player.width >= platform.position.x &&
+				player.position.x <= platform.position.x + platform.width &&
+				(!platform.badPlatform || (platform.badPlatform && player.velocity.y > 0));
+		
+				if (isColliding) {
+					if (platform.badPlatform) {
+							init();
+					} else {
+						player.velocity.y = 0;
+						player.canJump = true; // Reset jump when player is on a platform
+					}
+				}
+			
+				return isColliding;
 			}
-	
-			return isColliding;
-	}
 		
 
 		let offsetX = 1400; //1400
@@ -1239,10 +1241,9 @@ const Canvas = (props) => {
 			}
 
 			// Check for collision with the platform and stop vertical movement if colliding
-			platforms.forEach((platform, index) => {
+			platforms.forEach((platform) => {
 				if (detectCollision(player, platform)) {
 					if (platform.badPlatform && player.velocity.y > 0) {
-						platform.splice(index, 1);
 						init();
 					} else {
 						player.velocity.y = 0;
@@ -1299,7 +1300,7 @@ const Canvas = (props) => {
 
 				case 87: // W key for jumping
 					if (player.canJump) {
-						player.velocity.y = -8; // Apply upward velocity for jumping
+						player.velocity.y = -10; // Apply upward velocity for jumping
 						player.canJump = false; // Update jump flag
 					}
 					break;
