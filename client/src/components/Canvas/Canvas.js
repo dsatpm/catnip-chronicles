@@ -86,28 +86,25 @@ const Canvas = (props) => {
 
 			// Update player position and apply gravity
 			update() {
-				this.currentFrameDelay++;
-
-				if (this.currentFrameDelay >= this.frameDelay) {
-					this.frames++;
-					if (this.frames > 16) this.frames = 0;
-					this.currentFrameDelay = 0;
-				}
-
-				this.draw();
-				this.position.y += this.velocity.y;
-				this.position.x += this.velocity.x;
-
-				// Apply gravity only if the player is above the ground
-				if (this.position.y + this.height < canvas.height) {
-					this.velocity.y += gravity;
-					this.canJump = false; // Player is in the air, so can't jump
-				} else {
-					this.velocity.y = 0; // Stop vertical movement when on the ground
-					this.canJump = true; // Player is on the ground, allow jumping
-				}
-			}
-		}
+        this.currentFrameDelay++;
+        if (this.currentFrameDelay >= this.frameDelay) {
+          this.frames++;
+          if (this.frames > 16) this.frames = 0;
+          this.currentFrameDelay = 0;
+        }
+        this.draw();
+        this.position.y += this.velocity.y;
+        this.position.x += this.velocity.x;
+        // Apply gravity only if the player is above the ground
+        if (this.position.y + this.height < canvas.height) {
+          this.velocity.y += gravity;
+          this.canJump = false; // Player is in the air, so can't jump
+        } else {
+          this.velocity.y = 0; // Stop vertical movement when on the ground
+          this.canJump = true; // Player is on the ground, allow jumping
+        }
+      }
+    }
 
 		// Platform class
 		class Platform {
@@ -124,7 +121,7 @@ const Canvas = (props) => {
 
 			// Draw the platform on the canvas
 			draw() {
-				c.fillStyle = 'black'; //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';
+				c.fillStyle = 'transparent'; //Clear ->   c.fillStyle = 'rgba(0, 0, 0, 0)';    -> black  c.fillStyle = 'black';
 				c.fillRect(
 					this.position.x,
 					this.position.y,
@@ -1175,25 +1172,26 @@ const Canvas = (props) => {
 
 		// Collision detection function between player and platforms
 		function detectCollision(player, platform) {
+			const playerBottom = player.position.y + player.height;
+			const platformTop = platform.position.y;
+			const playerRight = player.position.x + player.width;
+			const platformLeft = platform.position.x;
+			
 			const isColliding =
-				player.position.y + player.height <= platform.position.y &&
-				player.position.y + player.height + player.velocity.y >=
-					platform.position.y &&
-				player.position.x + player.width >= platform.position.x &&
-				player.position.x <= platform.position.x + platform.width &&
-				(!platform.badPlatform ||
-					(platform.badPlatform && player.velocity.y > 0));
-
+					playerBottom >= platformTop &&
+					player.position.y <= platform.position.y + platform.height &&
+					playerRight >= platformLeft &&
+					player.position.x <= platformLeft + platform.width;
+	
 			if (isColliding) {
-				if (platform.badPlatform) {
-						init();
-					};
-				} else {
+					// Handle collision actions here
+					player.position.y = platformTop - player.height; // Adjust player position
 					player.velocity.y = 0;
-					player.canJump = true; // Reset jump when player is on a platform
-				}
+					player.canJump = true;
+			}
+	
 			return isColliding;
-		}
+	}
 		
 
 		let offsetX = 1400; //1400
@@ -1303,7 +1301,7 @@ const Canvas = (props) => {
 
 				case 87: // W key for jumping
 					if (player.canJump) {
-						player.velocity.y = -10; // Apply upward velocity for jumping
+						player.velocity.y = -8; // Apply upward velocity for jumping
 						player.canJump = false; // Update jump flag
 					}
 					break;
@@ -1318,8 +1316,7 @@ const Canvas = (props) => {
 
 				case 32: // Space key
 					break;
-				default:
-					break;
+					default: break;
 			}
 		});
 
@@ -1343,8 +1340,7 @@ const Canvas = (props) => {
 
 				case 32: // Space key
 					break;
-				default:
-					break;
+					default: break;
 			}
 		});
 	}, []);
