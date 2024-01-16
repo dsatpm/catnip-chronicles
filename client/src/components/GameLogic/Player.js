@@ -1,5 +1,5 @@
 
-import { GRAVITY, PLAYER_DIMENSIONS, PLAYER_START_POSITION, PLAYER_SPEED, CANVAS_SIZE_Y, FRAME_DELAY } from '../../constants/canvas';
+import { GRAVITY, PLAYER_DIMENSIONS, PLAYER_START_POSITION, PLAYER_SPEED, FRAME_DELAY } from '../../constants/canvas';
 
 class Player {
   constructor() {
@@ -49,20 +49,20 @@ class Player {
     }
   }
 
-draw(context) {
-  // Draw the current frame of the animation
-  context.drawImage(
-    this.currentSprite,
-    20 * this.frames,
-    0,
-    20,
-    20,
-    this.position.x,
-    this.position.y,
-    this.width,
-    this.height
-  );
-  }
+// draw(context) {
+//   // Draw the current frame of the animation
+//   context.drawImage(
+//     this.currentSprite,
+//     20 * this.frames,
+//     0,
+//     20,
+//     20,
+//     this.position.x,
+//     this.position.y,
+//     this.width,
+//     this.height
+//   );
+//   }
   
   update() {
     this.currentFrameDelay++;
@@ -77,7 +77,7 @@ draw(context) {
     this.position.x += this.velocity.x;
 
     // Apply gravity only if the player is above the ground
-    if (this.position.y + this.height < CANVAS_SIZE_Y) {
+    if (this.position.y + this.height < canvas.height) {
       this.velocity.y += GRAVITY;
       this.canJump = false; // Player is in the air, so can't jump
     } else {

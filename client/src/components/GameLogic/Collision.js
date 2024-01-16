@@ -15,7 +15,7 @@ export function detectCollision(player, platform) {
       // and an AUDIO.DEATH object in your main game file
       AUDIO.DEATH.play();
       AUDIO.DEATH.addEventListener('ended', function () {
-        initializeGame();
+        // initializeGame();
       });
     } else {
       player.velocity.y = 0;

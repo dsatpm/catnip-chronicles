@@ -83,7 +83,7 @@ function endGame(winner) {
   }, 3000);
 }
 
-
 function updateTurnStatus(turn) {
   document.getElementById('status').innerText = `${turn}'s turn`;
 }
+

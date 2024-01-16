@@ -13,6 +13,4 @@ export const PLAYER_START_POSITION = {
 export const PLAYER_SPEED = 2;
 export const FRAME_DELAY = 10;
 
-export const CANVAS_SIZE_X = 3840;
-export const CANVAS_SIZE_Y = 640;
 
