@@ -1,9 +1,10 @@
 import { useRef, useEffect } from 'react';
-import BossBattle from '../BossBattle/BossBattle';
+import { useNavigate } from'react-router-dom';
 import { level1, idle, reverseIdle, run, reverseRun } from '../../assets/index';
 
 const Canvas = (props) => {
 	const canvasRef = useRef(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		// Get canvas and 2D rendering context
@@ -99,6 +100,9 @@ const Canvas = (props) => {
 				} else {
 					this.velocity.y = 0; // Stop vertical movement when on the ground
 					this.canJump = true; // Player is on the ground, allow jumping
+				}
+				if ( scrollOffset === 3220 ) {
+					navigate('/boss-battle');
 				}
 			}
 		}
@@ -1273,11 +1277,6 @@ const Canvas = (props) => {
 				player.currentSprite = player.sprites.stand.right;
 			}
 
-			// win Condition
-			if (scrollOffset > 100) {
-				console.log('You win!');
-			}
-
 			if (isPlayerBelowHeight(player, 605)) {
 				init();
 				console.log('GG, You kinda suck!');
@@ -1347,7 +1346,6 @@ const Canvas = (props) => {
 				ref={canvasRef}
 				{...props}
 			/>
-			{isBossBattleActive && <BossBattle />}
 		</>
 	);
 };

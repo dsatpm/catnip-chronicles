@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Canvas from './components/Canvas/Canvas';
+import BossBattle from './components/BossBattle/BossBattle';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import NotFound from './components/NotFound/NotFound';
@@ -19,8 +20,12 @@ function App() {
 					element={<Canvas />}
 				/>
 				<Route
-					path='/login'
-					element={<Login />}
+				path='/boss-battle'
+				element={<BossBattle />}
+				/>
+				<Route 
+				path='/login'
+				element={<Login />}
 				/>
 				<Route
 					path='/signup'

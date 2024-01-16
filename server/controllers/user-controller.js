@@ -60,5 +60,21 @@ module.exports = {
 
   // Notify the user
   res.json({ message: 'Game started!', game });
-}
+	},
+
+	async bossBattle({ user }, res) {
+		const currentGame = await Game.findOne({ user: user._id, status: 'in progress' });
+		if (!currentGame) {
+			return res.status(400).json({ message: 'You are not in a game!' });
+		}
+
+		// Update the game state
+		currentGame.state = gameState;
+		currentGame.markModified('state');
+		await currentGame.save();
+
+		// Notify the user
+		res.json({ message: 'Boss battle started!', game: currentGame });
+	},
+
 };
