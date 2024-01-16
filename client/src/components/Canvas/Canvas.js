@@ -1,8 +1,10 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import BossBattle from '../BossBattle/BossBattle';
 import { level1, idle, reverseIdle, run, reverseRun } from '../../assets/index';
 
 const Canvas = (props) => {
 	const canvasRef = useRef(null);
+	const [isBossBattleActive, setBossBattleActive] = useState(false);
 
 	useEffect(() => {
 		// Get canvas and 2D rendering context
@@ -15,10 +17,10 @@ const Canvas = (props) => {
 
 		// Gravity constant
 		const gravity = 1;
+		let bossTrigger = 100;
 
 		const backgroundImage = new Image();
-		backgroundImage.src =
-			level1;
+		backgroundImage.src = level1;
 
 		const idleImage = new Image();
 		idleImage.src = idle;
@@ -30,8 +32,7 @@ const Canvas = (props) => {
 		runImage.src = run;
 
 		const reverseRunImage = new Image();
-		reverseRunImage.src =
-			reverseRun;
+		reverseRunImage.src = reverseRun;
 
 		// Player class
 		class Player {
@@ -84,25 +85,25 @@ const Canvas = (props) => {
 
 			// Update player position and apply gravity
 			update() {
-        this.currentFrameDelay++;
-        if (this.currentFrameDelay >= this.frameDelay) {
-          this.frames++;
-          if (this.frames > 16) this.frames = 0;
-          this.currentFrameDelay = 0;
-        }
-        this.draw();
-        this.position.y += this.velocity.y;
-        this.position.x += this.velocity.x;
-        // Apply gravity only if the player is above the ground
-        if (this.position.y + this.height < canvas.height) {
-          this.velocity.y += gravity;
-          this.canJump = false; // Player is in the air, so can't jump
-        } else {
-          this.velocity.y = 0; // Stop vertical movement when on the ground
-          this.canJump = true; // Player is on the ground, allow jumping
-        }
-      }
-    }
+				this.currentFrameDelay++;
+				if (this.currentFrameDelay >= this.frameDelay) {
+					this.frames++;
+					if (this.frames > 16) this.frames = 0;
+					this.currentFrameDelay = 0;
+				}
+				this.draw();
+				this.position.y += this.velocity.y;
+				this.position.x += this.velocity.x;
+				// Apply gravity only if the player is above the ground
+				if (this.position.y + this.height < canvas.height) {
+					this.velocity.y += gravity;
+					this.canJump = false; // Player is in the air, so can't jump
+				} else {
+					this.velocity.y = 0; // Stop vertical movement when on the ground
+					this.canJump = true; // Player is on the ground, allow jumping
+				}
+			}
+		}
 
 		// Platform class
 		class Platform {
@@ -1174,23 +1175,28 @@ const Canvas = (props) => {
 			const platformTop = platform.position.y;
 			const playerRight = player.position.x + player.width;
 			const platformLeft = platform.position.x;
-			
+
 			const isColliding =
-					playerBottom >= platformTop &&
-					player.position.y <= platform.position.y + platform.height &&
-					playerRight >= platformLeft &&
-					player.position.x <= platformLeft + platform.width;
-	
+				playerBottom >= platformTop &&
+				player.position.y <= platform.position.y + platform.height &&
+				playerRight >= platformLeft &&
+				player.position.x <= platformLeft + platform.width;
+
 			if (isColliding) {
-					// Handle collision actions here
-					player.position.y = platformTop - player.height; // Adjust player position
-					player.velocity.y = 0;
-					player.canJump = true;
+				// Handle collision actions here
+				player.position.y = platformTop - player.height; // Adjust player position
+				player.velocity.y = 0;
+				player.canJump = true;
 			}
-	
+
 			return isColliding;
-	}
-		
+		}
+
+		function checkBossTrigger() {
+			if (player.position.x >= bossTrigger) {
+				setBossBattleActive(true);
+			}
+		}
 
 		let offsetX = 1400; //1400
 		// Animation loop
@@ -1215,6 +1221,8 @@ const Canvas = (props) => {
 			platforms.forEach((platform) => {
 				platform.draw(c);
 			});
+
+			checkBossTrigger();
 
 			// Handle horizontal movement based on keyboard input
 			if (keys.right.pressed && player.position.x < 1700) {
@@ -1278,14 +1286,14 @@ const Canvas = (props) => {
 			}
 
 			// win Condition
-			if (scrollOffset > 3000) {
-				console.log('You Win');
+			if (scrollOffset > 100) {
+				console.log('You win!');
 			}
 
 			if (isPlayerBelowHeight(player, 605)) {
-					init();
-					console.log('GG, You kinda suck!');
-				};
+				init();
+				console.log('GG, You kinda suck!');
+			}
 		}
 		animate();
 
@@ -1314,7 +1322,8 @@ const Canvas = (props) => {
 
 				case 32: // Space key
 					break;
-					default: break;
+				default:
+					break;
 			}
 		});
 
@@ -1338,16 +1347,20 @@ const Canvas = (props) => {
 
 				case 32: // Space key
 					break;
-					default: break;
+				default:
+					break;
 			}
 		});
 	}, []);
 
 	return (
-		<canvas
-			ref={canvasRef}
-			{...props}
-		/>
+		<>
+			<canvas
+				ref={canvasRef}
+				{...props}
+			/>
+			{isBossBattleActive && <BossBattle />}
+		</>
 	);
 };
 
