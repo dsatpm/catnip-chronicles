@@ -1,31 +1,8 @@
-// Get canvas and 2D rendering context
+import { IMAGES, AUDIO, GRAVITY } from '../../constants';
 
 
 
 function initializeGame(canvas, c) {
-
-// Set canvas size to match window size
-canvas.width = 3840;   //3840
-canvas.height = 640;   //640 
-
-// Gravity constant
-const gravity = 1;
-
-const idleImage = new Image();
-idleImage.src = '/client/src/assets/Sprites/Idle.png'
-
-const reversedIdleImage = new Image();
-reversedIdleImage.src = '/client/src/assets/Sprites/Idle(reversed).png'
-
-const runImage = new Image();
-runImage.src = '/client/src/assets/Sprites/RunningSprite.png'
-
-const reverseRunImage = new Image();
-reverseRunImage.src = '/client/src/assets/Sprites/RunningSprite(reversed).png'
-
-const jumpSound = new Audio('/client/src/assets/Audio/386651__jalastram__sfx_jump_40.wav');
-
-const deathSound = new Audio('/client/src/assets/Audio/tom-scream_d1PFYKW.mp3');
 
 // Player class
 class Player {
@@ -47,16 +24,16 @@ class Player {
         this.width = 30;
         this.height = 30;
 
-        this.image = idleImage
+        this.image = IMAGES.IDLE;
         this.frames = 0;
         this.sprites = {
             stand: {
-             right: idleImage,
-             left: reversedIdleImage
+                right: IMAGES.IDLE,
+                left: IMAGES.REVERSE_IDLE
             },
             run: {
-             right: runImage,
-             left: reverseRunImage
+                right: IMAGES.RUN,
+                left: IMAGES.REVERSE_RUN
             }
         };
         this.currentSprite = this.sprites.stand.right
@@ -97,7 +74,7 @@ class Player {
 
         // Apply gravity only if the player is above the ground
         if (this.position.y + this.height < canvas.height) {
-            this.velocity.y += gravity;
+            this.velocity.y += GRAVITY;
             this.canJump = false; // Player is in the air, so can't jump
         } else {
             this.velocity.y = 0; // Stop vertical movement when on the ground
@@ -105,10 +82,6 @@ class Player {
         }
     }
 }
-
-
-const terrainImage = new Image();
-terrainImage.src = '/catnip-chronicles/client/src/Images/Terrain/Grass Terrain(16x64).jpg';
 
 // Platform class
 class Platform {
@@ -130,448 +103,448 @@ class Platform {
     }
 }
 
-let player = new Player();
-let platforms = [
-    new Platform({       //TOP LONG BOY
-        x: 1400,
-        y: 200,
-        height: 12,
-        width: 10000,
-    }),
-    new Platform({          //Long Boy #1 Area
-        x: 1400,
-        y: 513,
-        height: 29,
-        width: 420,
-    }),
-    new Platform({
-        x: 1530,
-        y: 487,
-        height: 29,
-        width: 20,
-    }),
-    new Platform({
-        x: 1557,
-        y: 472,
-        height: 29,
-        width: 20,
-    }),
-    new Platform({
-        x: 1582,
-        y: 462,
-        height: 29,
-        width: 20,
-    }),
-    new Platform({  //Long boy  Brown Area
-        x: 1607,
-        y: 449,
-        height: 29,
-        width: 72,
-    }),
-    new Platform({
-        x: 1684,
-        y: 462,
-        height: 29,
-        width: 20,
-    }),
-    new Platform({
-        x: 1710,
-        y: 472,
-        height: 29,
-        width: 20,
-    }),
-    new Platform({
-        x: 1736,
-        y: 487,
-        height: 29,
-        width: 20,
-    }),
-    new Platform({          //Floating Platform
-        x: 1827,
-        y: 487,
-        height: 12,
-        width: 30,
-    }),
-    new Platform({          //Floating Platform
-        x: 1878,
-        y: 462,
-        height: 12,
-        width: 30,
-    }),
-    new Platform({          //Floating Platform
-        x: 1929,
-        y: 436,
-        height: 12,
-        width: 30,
-    }),
-    new Platform({          //Floating Platform
-        x: 1827,
-        y: 487,
-        height: 12,
-        width: 30,
-    }),
-    new Platform({          //Floating Platform
-        x: 1993,
-        y: 449,
-        height: 12,
-        width: 30,
-    }),
-    new Platform({          //Floating Platform
-        x: 2057,
-        y: 462,
-        height: 12,
-        width: 30,
-    }),
-    new Platform({          //Floating Platform
-        x: 2108,
-        y: 486,
-        height: 12,
-        width: 30,
-    }),
-    new Platform({          //Long Boy #2 Area
-        x: 2145,
-        y: 512,
-        height: 12,
-        width: 380,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2249,
-        y: 486,
-        height: 12,
-        width: 60,
-    }),
-    new Platform({          //Brown Obscure Obstacles Long
-        x: 2312,
-        y: 473,
-        height: 12,
-        width: 210,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2362,
-        y: 449,
-        height: 12,
-        width: 20,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2428,
-        y: 449,
-        height: 12,
-        width: 20,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2453,
-        y: 423,
-        height: 12,
-        width: 70,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2428,
-        y: 372,
-        height: 12,
-        width: 70,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2338,
-        y: 334,
-        height: 12,
-        width: 70,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2454,
-        y: 295,
-        height: 12,
-        width: 145,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2633,
-        y: 346,
-        height: 12,
-        width: 70,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2734,
-        y: 397,
-        height: 12,
-        width: 45,
-    }),
-    new Platform({          //Brown Obscure Obstacles
-        x: 2811,
-        y: 435,
-        height: 12,
-        width: 45,
-    }),
-    new Platform({          //Long boy area#3
-        x: 2658,
-        y: 512,
-        height: 12,
-        width: 658,
-    }),
-    new Platform({          //Small Platform
-        x: 3336,
-        y: 500,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 2954,
-        y: 475,
-        height: 10,
-        width: 340,
-        badPlatform: true
-    }),
-    new Platform({          //Small Platform
-        x: 3400,
-        y: 510,
-        height: 12,
-        width: 300,
-    }),
-    new Platform({          //Small Platform
-        x: 3400,
-        y: 487,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3438,
-        y: 462,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3477,
-        y: 435,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3516,
-        y: 410,
-        height: 12,
-        width: 108,
-    }),
-    new Platform({          //Small Platform
-        x: 3630,
-        y: 435,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3669,
-        y: 462,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3708,
-        y: 487,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3746,
-        y: 513,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3784,
-        y: 538,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3820,
-        y: 600,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3899,
-        y: 600,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 3976,
-        y: 600,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 4053,
-        y: 588,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 4091,
-        y: 576,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 4130,
-        y: 564,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 4206,
-        y: 538,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 4244,
-        y: 525,
-        height: 12,
-        width: 32,
-    }),
-    new Platform({          //Small Platform
-        x: 4284,
-        y: 512,
-        height: 12,
-        width: 390,
-    }),
-    new Platform({          //Small Platform
-        x: 4320,
-        y: 440,
-        height: 5,
-        width: 40,
-        badPlatform: true
-    }),
-    new Platform({          //Small Platform
-        x: 4445,
-        y: 440,
-        height: 5,
-        width: 40,
-        badPlatform: true
-    }),
-    new Platform({          //Small Platform
-        x: 4525,
-        y: 483,
-        height: 5,
-        width: 22,
-        badPlatform: true
-    }),
-    new Platform({          //Small Platform
-        x: 4575,
-        y: 455,
-        height: 5,
-        width: 22,
-        badPlatform: true
-    }),
-    new Platform({          //Small Platform
-        x: 4500,
-        y: 486,
-        height: 12,
-        width: 24,
-    }),
-    new Platform({          //Small Platform
-        x: 4550,
-        y: 460,
-        height: 12,
-        width: 24,
-    }),
-    new Platform({          //Small Platform
-        x: 4600,
-        y: 462,
-        height: 12,
-        width: 38,
-    }),
-    new Platform({          //Small Platform
-        x: 4635,
-        y: 462,
-        height: 12,
-        width: 40,
-    }),
-    new Platform({          //Small Platform
-        x: 4705,
-        y: 512,
-        height: 12,
-        width: 20,
-    }),
-    new Platform({          //Small Platform
-        x: 4757,
-        y: 512,
-        height: 12,
-        width: 20,
-    }),
-    new Platform({          //Small Platform
-        x: 4809,
-        y: 512,
-        height: 12,
-        width: 430,
-    }),
-    new Platform({          //Small Platform
-        x: 4859,
-        y: 486,
-        height: 30,
-        width: 20,
-    }),
-    new Platform({          //Small Platform
-        x: 4884,
-        y: 474,
-        height: 40,
-        width: 20,
-    }),
-    new Platform({          //Small Platform
-        x: 4910,
-        y: 462,
-        height: 50,
-        width: 20,
-    }),
-    new Platform({          //Small Platform
-        x: 4936,
-        y: 448,
-        height: 70,
-        width: 20,
-    }),
-    new Platform({          //Long
-        x: 4961,
-        y: 435,
-        height: 80,
-        width: 72,
-    }),
-    new Platform({          //Small Platform
-        x: 5038,
-        y: 448,
-        height: 70,
-        width: 20,
-    }),
-    new Platform({          //Small Platform
-        x: 5063,
-        y: 462,
-        height: 50,
-        width: 20,
-    }),
-    new Platform({          //Small Platform
-        x: 5089,
-        y: 474,
-        height: 40,
-        width: 20,
-    }),
-    new Platform({          //Small Platform
-        x: 5115,
-        y: 486,
-        height: 30,
-        width: 20,
-    }),
-    new Platform({          //Small Platform
-        x: 5140,
-        y: 490,
-        height: 30,
-        width: 40,
-        badPlatform: true
-    }),
-    new Platform({          //Small Platform
-        x: 4845,
-        y: 494,
-        height: 30,
-        width: 10,
-        badPlatform: true
-    }),
-];
+// let player = new Player();
+// let platforms = [
+    // new Platform({       //TOP LONG BOY
+    //     x: 1400,
+    //     y: 200,
+    //     height: 12,
+    //     width: 10000,
+    // }),
+    // new Platform({          //Long Boy #1 Area
+    //     x: 1400,
+    //     y: 513,
+    //     height: 29,
+    //     width: 420,
+    // }),
+    // new Platform({
+    //     x: 1530,
+    //     y: 487,
+    //     height: 29,
+    //     width: 20,
+    // }),
+    // new Platform({
+    //     x: 1557,
+    //     y: 472,
+    //     height: 29,
+    //     width: 20,
+    // }),
+    // new Platform({
+    //     x: 1582,
+    //     y: 462,
+    //     height: 29,
+    //     width: 20,
+    // }),
+    // new Platform({  //Long boy  Brown Area
+    //     x: 1607,
+    //     y: 449,
+    //     height: 29,
+    //     width: 72,
+    // }),
+    // new Platform({
+    //     x: 1684,
+    //     y: 462,
+    //     height: 29,
+    //     width: 20,
+    // }),
+    // new Platform({
+    //     x: 1710,
+    //     y: 472,
+    //     height: 29,
+    //     width: 20,
+    // }),
+    // new Platform({
+    //     x: 1736,
+    //     y: 487,
+    //     height: 29,
+    //     width: 20,
+    // }),
+    // new Platform({          //Floating Platform
+    //     x: 1827,
+    //     y: 487,
+    //     height: 12,
+    //     width: 30,
+    // }),
+    // new Platform({          //Floating Platform
+    //     x: 1878,
+    //     y: 462,
+    //     height: 12,
+    //     width: 30,
+    // }),
+    // new Platform({          //Floating Platform
+    //     x: 1929,
+    //     y: 436,
+    //     height: 12,
+    //     width: 30,
+    // }),
+    // new Platform({          //Floating Platform
+    //     x: 1827,
+    //     y: 487,
+    //     height: 12,
+    //     width: 30,
+    // }),
+    // new Platform({          //Floating Platform
+    //     x: 1993,
+    //     y: 449,
+    //     height: 12,
+    //     width: 30,
+    // }),
+    // new Platform({          //Floating Platform
+    //     x: 2057,
+    //     y: 462,
+    //     height: 12,
+    //     width: 30,
+    // }),
+    // new Platform({          //Floating Platform
+    //     x: 2108,
+    //     y: 486,
+    //     height: 12,
+    //     width: 30,
+    // }),
+    // new Platform({          //Long Boy #2 Area
+    //     x: 2145,
+    //     y: 512,
+    //     height: 12,
+    //     width: 380,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2249,
+    //     y: 486,
+    //     height: 12,
+    //     width: 60,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles Long
+    //     x: 2312,
+    //     y: 473,
+    //     height: 12,
+    //     width: 210,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2362,
+    //     y: 449,
+    //     height: 12,
+    //     width: 20,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2428,
+    //     y: 449,
+    //     height: 12,
+    //     width: 20,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2453,
+    //     y: 423,
+    //     height: 12,
+    //     width: 70,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2428,
+    //     y: 372,
+    //     height: 12,
+    //     width: 70,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2338,
+    //     y: 334,
+    //     height: 12,
+    //     width: 70,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2454,
+    //     y: 295,
+    //     height: 12,
+    //     width: 145,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2633,
+    //     y: 346,
+    //     height: 12,
+    //     width: 70,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2734,
+    //     y: 397,
+    //     height: 12,
+    //     width: 45,
+    // }),
+    // new Platform({          //Brown Obscure Obstacles
+    //     x: 2811,
+    //     y: 435,
+    //     height: 12,
+    //     width: 45,
+    // }),
+    // new Platform({          //Long boy area#3
+    //     x: 2658,
+    //     y: 512,
+    //     height: 12,
+    //     width: 658,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3336,
+    //     y: 500,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 2954,
+    //     y: 475,
+    //     height: 10,
+    //     width: 340,
+    //     badPlatform: true
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3400,
+    //     y: 510,
+    //     height: 12,
+    //     width: 300,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3400,
+    //     y: 487,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3438,
+    //     y: 462,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3477,
+    //     y: 435,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3516,
+    //     y: 410,
+    //     height: 12,
+    //     width: 108,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3630,
+    //     y: 435,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3669,
+    //     y: 462,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3708,
+    //     y: 487,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3746,
+    //     y: 513,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3784,
+    //     y: 538,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3820,
+    //     y: 600,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3899,
+    //     y: 600,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 3976,
+    //     y: 600,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4053,
+    //     y: 588,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4091,
+    //     y: 576,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4130,
+    //     y: 564,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4206,
+    //     y: 538,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4244,
+    //     y: 525,
+    //     height: 12,
+    //     width: 32,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4284,
+    //     y: 512,
+    //     height: 12,
+    //     width: 390,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4320,
+    //     y: 440,
+    //     height: 5,
+    //     width: 40,
+    //     badPlatform: true
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4445,
+    //     y: 440,
+    //     height: 5,
+    //     width: 40,
+    //     badPlatform: true
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4525,
+    //     y: 483,
+    //     height: 5,
+    //     width: 22,
+    //     badPlatform: true
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4575,
+    //     y: 455,
+    //     height: 5,
+    //     width: 22,
+    //     badPlatform: true
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4500,
+    //     y: 486,
+    //     height: 12,
+    //     width: 24,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4550,
+    //     y: 460,
+    //     height: 12,
+    //     width: 24,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4600,
+    //     y: 462,
+    //     height: 12,
+    //     width: 38,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4635,
+    //     y: 462,
+    //     height: 12,
+    //     width: 40,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4705,
+    //     y: 512,
+    //     height: 12,
+    //     width: 20,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4757,
+    //     y: 512,
+    //     height: 12,
+    //     width: 20,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4809,
+    //     y: 512,
+    //     height: 12,
+    //     width: 430,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4859,
+    //     y: 486,
+    //     height: 30,
+    //     width: 20,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4884,
+    //     y: 474,
+    //     height: 40,
+    //     width: 20,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4910,
+    //     y: 462,
+    //     height: 50,
+    //     width: 20,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 4936,
+    //     y: 448,
+    //     height: 70,
+    //     width: 20,
+    // }),
+    // new Platform({          //Long
+    //     x: 4961,
+    //     y: 435,
+    //     height: 80,
+    //     width: 72,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 5038,
+    //     y: 448,
+    //     height: 70,
+    //     width: 20,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 5063,
+    //     y: 462,
+    //     height: 50,
+    //     width: 20,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 5089,
+    //     y: 474,
+    //     height: 40,
+    //     width: 20,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 5115,
+    //     y: 486,
+    //     height: 30,
+    //     width: 20,
+    // }),
+    // new Platform({          //Small Platform
+    //     x: 5140,
+    //     y: 490,
+    //     height: 30,
+    //     width: 40,
+    //     badPlatform: true
+//     }),
+//     new Platform({          //Small Platform
+//         x: 4845,
+//         y: 494,
+//         height: 30,
+//         width: 10,
+//         badPlatform: true
+//     }),
+// ];
 
 let currentKey
 // Keyboard input state
@@ -1048,8 +1021,8 @@ function detectCollision(player, platform) {
 
         if (isColliding) {
             if (platform.badPlatform) {
-                deathSound.play()
-                deathSound.addEventListener('ended', function() {
+                AUDIO.DEATH.play()
+                AUDIO.DEATH.addEventListener('ended', function() {
                     initializeGame();
                 });
             } else {
@@ -1064,9 +1037,6 @@ function detectCollision(player, platform) {
 let backgroundImage = new Image();
 backgroundImage.src = '/client/src/assets/catnipChroniclesLevel0Adjusted.png';
 
-backgroundImage.addEventListener('load', function() {
-    animate();
-});
 
 let offsetX = 1400;  //1400
 // Animation loop
@@ -1144,8 +1114,8 @@ function animate() {
     }
 
     if (isPlayerBelowHeight(player, 605)) {
-        deathSound.play();
-        deathSound.addEventListener('ended', function() {
+        AUDIO.DEATH.play();
+        AUDIO.DEATH.addEventListener('ended', function() {
             initializeGame();
         console.log('GG, You kinda suck!');
     })  
@@ -1168,7 +1138,7 @@ window.addEventListener('keydown', ({ keyCode }) => {
             if (player.canJump) {
                 player.velocity.y = -10; // Apply upward velocity for jumping
                 player.canJump = false; // Update jump flag
-                jumpSound.play();
+                AUDIO.JUMP.play();
                 console.log('jump Sound');
             }
             break;
