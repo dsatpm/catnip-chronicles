@@ -1,7 +1,5 @@
 import { useRef, useEffect } from 'react';
 import { level1, idle, reverseIdle, run, reverseRun } from '../../assets/index';
-// import Player from '../GameLogic/Player';
-// import Platform from '../GameLogic/Platform';
 
 const Canvas = (props) => {
 	const canvasRef = useRef(null);
