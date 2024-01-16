@@ -1199,7 +1199,6 @@ const Canvas = (props) => {
 		let offsetX = 1400; //1400
 		// Animation loop
 		function animate() {
-			console.log('player Position:', player.position.y);
 			requestAnimationFrame(animate);
 
 			const backgroundX =
@@ -1306,8 +1305,6 @@ const Canvas = (props) => {
 					if (player.canJump) {
 						player.velocity.y = -10; // Apply upward velocity for jumping
 						player.canJump = false; // Update jump flag
-						// jumpSound.play();
-						// console.log('jump Sound');
 					}
 					break;
 
@@ -1320,7 +1317,6 @@ const Canvas = (props) => {
 					break;
 
 				case 32: // Space key
-					console.log('space');
 					break;
 				default:
 					break;
@@ -1346,7 +1342,6 @@ const Canvas = (props) => {
 					break;
 
 				case 32: // Space key
-					console.log('space');
 					break;
 				default:
 					break;
