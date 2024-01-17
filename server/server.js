@@ -1,5 +1,6 @@
 // import Express, database, cors
-require('dotenv').config({ path: '../.env' });
+const path = require('path');
+require('dotenv').config();
 const express = require('express');
 const DB = require('./config/connection');
 const cors = require('cors');
