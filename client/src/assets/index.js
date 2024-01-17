@@ -11,5 +11,7 @@ import start from './Sprites/start.png';
 
 import jumpSound from './Audio/jump.wav';
 import deathSound from './Audio/death.mp3';
+import level1Music from './Audio/bit-shift-kevin-macleod.mp3';
+import bossBattle from './Audio/boss-battle.wav';
 
-export { level1, bossLevel, lucypurr, dreadclaw, trophy, idle, reverseIdle, run, reverseRun, start, jumpSound, deathSound };
+export { level1, bossLevel, lucypurr, dreadclaw, trophy, idle, reverseIdle, run, reverseRun, start, jumpSound, deathSound, level1Music, bossBattle };

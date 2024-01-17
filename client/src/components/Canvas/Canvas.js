@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useNavigate } from'react-router-dom';
-import { level1, idle, reverseIdle, run, reverseRun } from '../../assets/index';
+import { level1, idle, reverseIdle, run, reverseRun, jumpSound, deathSound, level1Music } from '../../assets/index';
 
 const Canvas = (props) => {
 	const canvasRef = useRef(null);
@@ -33,9 +33,15 @@ const Canvas = (props) => {
 		const reverseRunImage = new Image();
 		reverseRunImage.src = reverseRun;
 
+		const jump = new Audio(jumpSound);
+		const death = new Audio(deathSound);
+		const music = new Audio(level1Music);
+		// const boss = new Audio(bossBattle);
+
 		// Player class
 		class Player {
 			constructor() {
+				
 				this.frameDelay = 10;
 				this.currentFrameDelay = 0;
 				this.speed = 2; //Original speed 2
@@ -100,9 +106,6 @@ const Canvas = (props) => {
 				} else {
 					this.velocity.y = 0; // Stop vertical movement when on the ground
 					this.canJump = true; // Player is on the ground, allow jumping
-				}
-				if ( scrollOffset === 3220 ) {
-					navigate('/boss-battle');
 				}
 			}
 		}
@@ -1210,7 +1213,13 @@ const Canvas = (props) => {
 			);
 
 			// Update and draw player
+			music.play();
+			music.volume = 0.5;
 			player.update(c);
+
+			if ( scrollOffset === 3220) {
+				navigate('/boss-battle');
+			}
 
 			// Draw platforms
 			platforms.forEach((platform) => {
@@ -1278,7 +1287,10 @@ const Canvas = (props) => {
 			}
 
 			if (isPlayerBelowHeight(player, 605)) {
-				init();
+				death.play();
+				death.addEventListener('ended', () => {
+					init();
+				});
 				console.log('GG, You kinda suck!');
 			}
 		}
@@ -1294,6 +1306,7 @@ const Canvas = (props) => {
 
 				case 87: // W key for jumping
 					if (player.canJump) {
+						jump.play();
 						player.velocity.y = -10; // Apply upward velocity for jumping
 						player.canJump = false; // Update jump flag
 					}
