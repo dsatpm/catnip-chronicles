@@ -41,7 +41,7 @@ const Canvas = (props) => {
 		// Player class
 		class Player {
 			constructor() {
-				
+				music.play();
 				this.frameDelay = 10;
 				this.currentFrameDelay = 0;
 				this.speed = 2; //Original speed 2
@@ -1213,8 +1213,7 @@ const Canvas = (props) => {
 			);
 
 			// Update and draw player
-			music.play();
-			music.volume = 0.5;
+
 			player.update(c);
 
 			if ( scrollOffset === 3220) {
