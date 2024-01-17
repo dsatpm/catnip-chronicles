@@ -50,6 +50,14 @@ cd client && npm start
 cd ../server && npm start
 ```
 
+## Screenshots
+
+![Homepage](./client/src/Images/homepage.png)
+
+![Login Page](./client/src/Images/login.png)
+
+![Game](./client/src/Images/game.png)
+
 
 ## Project Structure
 
@@ -78,6 +86,7 @@ Catnip Chronicles follows a well-organized project structure to enhance maintain
 ### [TorySnopl](https://github.com/TorySnopl)
 ### [UCarr81](https://github.com/UCarr81)
 ### [dsatpm](https://github.com/dsatpm)
+
 
 
   ## Contribution
